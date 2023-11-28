@@ -3,4 +3,42 @@
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
+  padding: 32px;
+}
+
+.illustrationContainer{
+  display: flex;
+  justify-content: center;
+}
+
+.slogan {
+  font-weight: 700;
+  font-size: 24px;
+  color: #343A40;
+  text-align: center;
+}
+
+.sloganAction {
+  font-weight: 400;
+  font-size: 16px;
+  color: #68717A;
+  text-align: center;
+}
+
+.button {
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #FFE69C;
+}
+
+.buttonText {
+  font-weight: 600;
+  font-size: 16px;
+  color: #343A40;
 }
