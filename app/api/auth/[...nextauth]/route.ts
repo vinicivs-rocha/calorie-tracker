@@ -1,7 +1,7 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from 'next-auth/providers/google'
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       name: "Google",
@@ -19,6 +19,8 @@ const handler = NextAuth({
   pages: {
     signIn: '/',
   },  
-})
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
