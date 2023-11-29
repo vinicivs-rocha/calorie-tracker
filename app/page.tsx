@@ -17,6 +17,7 @@ export default  async function LoginPage() {
     <div className={styles.loginContainer}>
       <div className={styles.illustrationContainer}>
         <Image
+          className={styles.image}
           src={loginIllustration}
           width={250}
           height={250}

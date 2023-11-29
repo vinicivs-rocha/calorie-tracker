@@ -37,8 +37,44 @@
   background-color: #FFE69C;
 }
 
+.button:hover {
+  cursor: pointer;
+  background-color: #f6d97f;
+}
+
+.button:active {
+  opacity: 0.8;
+}
+
 .buttonText {
   font-weight: 600;
   font-size: 16px;
   color: #343A40;
+}
+
+@media screen and (min-width: 1440px) {
+  .loginContainer {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 64px;
+  }
+
+  .slogan {
+    font-size: 72px;
+    margin: 8px 0;
+  }
+
+  .sloganAction {
+    font-size: 24px;
+  }
+
+  .image {
+    width: 500px;
+    height: 500px;
+  }
+
+  .button {
+    max-width: 300px;
+    padding: 16px 24px;
+  }
 }
