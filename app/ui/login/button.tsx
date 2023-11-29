@@ -7,7 +7,9 @@ import { signIn } from 'next-auth/react';
 
 export default function LoginButton() {
   const handleClick = async () => {
-    signIn('google')
+    signIn('google', {
+      callbackUrl: '/home'
+    })
   };
 
   return (
