@@ -1,15 +1,11 @@
-'use client';
-
 import Image from 'next/image';
 import loginIcon from "@/app/ui/assets/login-icon.svg";
 import styles from '@/app/ui/login/login.module.css';
-import { signIn } from 'next-auth/react';
+import { authenticateGoogle } from '@/app/lib/actions';
 
 export default function LoginButton() {
-  const handleClick = async () => {
-    signIn('google', {
-      callbackUrl: '/home'
-    });
+  const handleClick = () => {
+    authenticateGoogle();
   };
 
   return (
