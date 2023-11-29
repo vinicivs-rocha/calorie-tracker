@@ -9,7 +9,7 @@ export default function LoginButton() {
   const handleClick = async () => {
     signIn('google', {
       callbackUrl: '/home'
-    })
+    });
   };
 
   return (
