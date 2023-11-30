@@ -1,9 +1,10 @@
-import CurrentMeals from "@/app/(protected-segment)/home/current";
-import MealsHistory from "@/app/(protected-segment)/home/history";
+import CurrentMeals from "@/app/ui/home/current/current";
+import MealsHistory from "@/app/ui/home/history/history";
+import styles from '@/app/ui/home/home.module.css';
 
 export default function Home({searchParams}: { params: {}, searchParams: { tab: 'current' | 'history' } }) {
   return (
-    <main>
+    <main className={styles.mainContainer}>
     { searchParams.tab === 'current' ? <CurrentMeals /> : <MealsHistory />}
     </main>
   )
