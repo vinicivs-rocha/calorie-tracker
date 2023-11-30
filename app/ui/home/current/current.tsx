@@ -1,7 +1,9 @@
+import StartDayButton from "./start-button";
+
 export default function CurrentMeals() {
   return (
-    <>
-      aaa
-    </>
-  )
+    <div>
+      <StartDayButton />
+    </div>
+  );
 }
