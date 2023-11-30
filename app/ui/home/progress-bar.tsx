@@ -1,4 +1,7 @@
+'use client';
+
 import styles from "@/app/ui/home/home.module.css";
+import { motion } from "framer-motion";
 
 interface ProgressBarProps {
   progress: number;
@@ -7,12 +10,12 @@ interface ProgressBarProps {
 export default function ProgressBar({ progress }: ProgressBarProps) {
   return (
     <div className={styles.progressBarContainer}>
-      <div
+      <motion.div
         className={styles.progressBarLineContainer}
-        style={{ width: `${progress}%` }}
-      >
-        <span className={styles.progressBarLine}></span>
-      </div>
+        initial={{ width: "0%" }}
+        animate={{ width: `${progress}%` }}
+        transition={{ duration: 1, type: 'tween' }}
+      />
     </div>
   );
 }

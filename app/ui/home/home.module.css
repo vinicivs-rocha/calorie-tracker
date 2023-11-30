@@ -78,14 +78,10 @@
 
 .progressBarLineContainer {
   height: 100%;
+  width: 100%;
   background-color: #F9FAFB;
   border-radius: inherit;
   text-align: right;
-}
-
-.progressBarLine {
-  color: #FFFFFF;
-  font-weight: 700;
 }
 
 .navigationContainer {
