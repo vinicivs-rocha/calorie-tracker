@@ -1,13 +1,12 @@
 import MealCard from "./meal-card";
 import StartDayButton from "./start-button";
 import styles from "./current.module.css";
-import { AnimatePresence } from "framer-motion";
 
 export default function CurrentMeals() {
   const meals = [
-    { name: "Café da manhã" },
-    { name: "Almoço" },
-    { name: "Jantar" },
+    { name: "Café da manhã", id: 1 },
+    { name: "Almoço", id: 2 },
+    { name: "Jantar", id: 3 },
   ];
   return (
     <div className={styles.currentMealsContainer}>
