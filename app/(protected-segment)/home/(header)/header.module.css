@@ -55,8 +55,8 @@
 }
 
 .userPicturePopper:active {
-  transition: all 0.1s linear;
-  transform: scale(0.95);
+  transition: all 0.05s linear;
+  scale: 0.95;
 }
 
 .calorieInfoContainer {

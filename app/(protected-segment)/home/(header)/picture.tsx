@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import styles from "@/app/(protected-segment)/home/(header)/header.module.css";
-import exitSign from "@/app/ui/assets/exit-sign.svg";
-import Image from "next/image";
-import { useRef, useState } from "react";
-import { usePopper } from "react-popper";
-import clsx from "clsx";
+import styles from '@/app/(protected-segment)/home/(header)/header.module.css';
+import exitSign from '@/app/ui/assets/exit-sign.svg';
+import Image from 'next/image';
+import { useRef, useState } from 'react';
+import { usePopper } from 'react-popper';
+import clsx from 'clsx';
 
 export default function UserPicture({ imageUrl }: { imageUrl: string }) {
   const [userPicturePopperOpen, setUserPicturePopperOpen] = useState(false);
@@ -17,7 +17,14 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
     popperRef.current,
     {
       modifiers: [
-        { name: "pictureOffset", enabled: true, options: { offset: [12, 24] } },
+        {
+          name: 'offset',
+          enabled: true,
+          options: {
+            offset: [45, -35],
+          },
+        },
+        { name: 'flip', options: { fallbackPlacements: ['left'] } },
       ],
     }
   );
@@ -31,7 +38,7 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
       >
         <Image
           src={imageUrl}
-          alt="User profile picture."
+          alt='User profile picture.'
           width={35}
           height={35}
         />
@@ -45,7 +52,7 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
         {...attributes.popper}
       >
         <span className={styles.popperText}>Encerrar sessão</span>
-        <Image src={exitSign} alt="" width={15} height={15} />
+        <Image src={exitSign} alt='' width={15} height={15} />
       </button>
     </>
   );
