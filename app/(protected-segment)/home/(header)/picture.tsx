@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import clsx from 'clsx';
+import PopperButton from './popper';
 
 export default function UserPicture({ imageUrl }: { imageUrl: string }) {
   const [userPicturePopperOpen, setUserPicturePopperOpen] = useState(false);
-  const [caloriesPopperOpen, setCaloriesPopperOpen] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
   const popperRef = useRef<HTMLButtonElement>(null);
   const { styles: popperStyles, attributes } = usePopper(
@@ -28,7 +28,6 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
       ],
     }
   );
-
   return (
     <>
       <div
@@ -43,17 +42,16 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
           height={35}
         />
       </div>
-      <button
-        className={clsx(styles.userPicturePopper, {
+      <PopperButton
+        className={clsx(styles.buttonPopper, {
           [styles.hidden]: !userPicturePopperOpen,
         })}
         style={popperStyles.popper}
         ref={popperRef}
+        text='Encerrar sessão'
+        image={exitSign}
         {...attributes.popper}
-      >
-        <span className={styles.popperText}>Encerrar sessão</span>
-        <Image src={exitSign} alt='' width={15} height={15} />
-      </button>
+      />
     </>
   );
 }
