@@ -19,5 +19,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-// TODO - move components too its own route folder
