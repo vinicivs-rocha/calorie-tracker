@@ -1,6 +1,6 @@
 'use client';
 
-import styles from "@/app/ui/home/header/header.module.css";
+import styles from "@/app/(protected-segment)/home/(header)/header.module.css";
 import { motion } from "framer-motion";
 
 interface ProgressBarProps {

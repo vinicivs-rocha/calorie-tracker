@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import loginIllustration from '@/app/ui/assets/login-illutration.svg'
-import LoginButton from '@/app/ui/login/button'
-import styles from '@/app/ui/login/login.module.css'
+import LoginButton from '@/app/(auth-segment)/button'
+import styles from '@/app/(auth-segment)/login.module.css'
 
 export default  async function LoginPage() {
   return (

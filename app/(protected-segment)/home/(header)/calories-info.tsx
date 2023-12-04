@@ -1,5 +1,5 @@
-import styles from "@/app/ui/home/header/header.module.css";
-import ProgressBar from "@/app/ui/home/header/progress-bar";
+import styles from "@/app/(protected-segment)/home/(header)/header.module.css";
+import ProgressBar from "@/app/(protected-segment)/home/(header)/progress-bar";
 
 export default function CaloriesInfo() {
   const caloriesGoal = 2000;

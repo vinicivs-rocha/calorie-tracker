@@ -1,7 +1,7 @@
-import MealCard from "./meal-card";
-import StartDayButton from "./start-button";
-import styles from "./current.module.css";
-import CurrentMealsFooter from "./footer";
+import MealCard from "./(current)/meal-card";
+import StartDayButton from "./(current)/start-button";
+import styles from "./(current)/current.module.css";
+import CurrentMealsFooter from "./(current)/footer";
 
 export default function CurrentMeals() {
   const meals = [

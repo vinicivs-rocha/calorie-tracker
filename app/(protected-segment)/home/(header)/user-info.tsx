@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import { getServerSession } from "next-auth"
-import styles from '@/app/ui/home/header/header.module.css'
+import styles from '@/app/(protected-segment)/home/(header)/header.module.css'
 import UserPicture from "./picture";
 
 export default async function UserInfo() {

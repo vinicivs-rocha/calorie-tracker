@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/app/ui/home/header/header.module.css";
+import styles from "@/app/(protected-segment)/home/(header)/header.module.css";
 import exitSign from "@/app/ui/assets/exit-sign.svg";
 import Image from "next/image";
 import { useRef, useState } from "react";
