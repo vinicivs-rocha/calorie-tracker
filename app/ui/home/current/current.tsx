@@ -1,6 +1,7 @@
 import MealCard from "./meal-card";
 import StartDayButton from "./start-button";
 import styles from "./current.module.css";
+import CurrentMealsFooter from "./footer";
 
 export default function CurrentMeals() {
   const meals = [
@@ -9,13 +10,16 @@ export default function CurrentMeals() {
     { name: "Jantar", id: 3 },
   ];
   return (
-    <div className={styles.currentMealsContainer}>
-      <StartDayButton />
-      <div className={styles.mealCardsContainer}>
-        {meals.map((meal) => (
-          <MealCard key={meal.name} meal={meal} />
-        ))}
+    <>
+      <div className={styles.currentMealsContainer}>
+        <StartDayButton />
+        <div className={styles.mealCardsContainer}>
+          {meals.map((meal) => (
+            <MealCard key={meal.name} meal={meal} />
+          ))}
+        </div>
       </div>
-    </div>
+      <CurrentMealsFooter />
+    </>
   );
 }
