@@ -8,8 +8,9 @@
 }
 
 .startDayButton {
-  width: 70%;
+  max-width: 70%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   background-color: #FEF08A;
