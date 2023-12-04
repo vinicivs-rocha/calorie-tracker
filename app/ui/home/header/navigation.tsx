@@ -10,17 +10,28 @@ export default function Navigation() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get("tab") ?? "current";
-  
+
   const navigationContainer = useRef<HTMLUListElement>(null);
   const navigationTabs = useRef<HTMLLIElement[]>([]);
   const activeTabIndicator = useRef<HTMLDivElement>(null);
 
-  const createQueryString = useCallback((tab: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("tab", tab);
+  const createQueryString = useCallback(
+    (tab: string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("tab", tab);
 
-    return params.toString();
-  }, [searchParams])
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const slideIndicatorToTab = useCallback((tab: HTMLLIElement) => {
+    const indicatorLeft = calculateIndicatorLeft(tab);
+    const tabWidth = tab.clientWidth;
+
+    activeTabIndicator.current!.style.left = `${indicatorLeft}px`;
+    activeTabIndicator.current!.style.width = `${tabWidth}px`;
+  }, []);
 
   function navigateTo(tab: string) {
     const queryString = createQueryString(tab);
@@ -29,39 +40,30 @@ export default function Navigation() {
 
   function calculateIndicatorLeft(tab: HTMLLIElement) {
     const tabLeft = tab.getBoundingClientRect().left;
-    const containerLeft = navigationContainer.current!.getBoundingClientRect().left;
+    const containerLeft =
+      navigationContainer.current!.getBoundingClientRect().left;
     return tabLeft - containerLeft;
   }
 
-  function slideIndicatorToTab(tab: HTMLLIElement) {
-    const indicatorLeft = calculateIndicatorLeft(tab);
-    const tabWidth = tab.clientWidth;
-
-    activeTabIndicator.current!.style.left = `${indicatorLeft}px`;
-    activeTabIndicator.current!.style.width = `${tabWidth}px`;
-  }
-
-  function activateTab(tab: HTMLLIElement, tabName: string) {
+  function activateTab(tabName: string) {
     navigateTo(tabName);
-    slideIndicatorToTab(tab);
   }
 
   useEffect(() => {
-    const currentTabElement = navigationTabs.current[activeTab === "current" ? 0 : 1]
+    const currentTabElement =
+      navigationTabs.current[activeTab === "current" ? 0 : 1];
     slideIndicatorToTab(currentTabElement);
-  }, [])
- 
+  }, [activeTab, slideIndicatorToTab]);
+
   return (
     <nav>
       <ul className={styles.navigationContainer} ref={navigationContainer}>
         <li
-          className={clsx(
-            {
-              [styles.activeTab]: activeTab === "current",
-            }
-          )}
-          onClick={({currentTarget}) => activateTab(currentTarget, "current")}
-          ref={el => navigationTabs.current.push(el!)}
+          className={clsx({
+            [styles.activeTab]: activeTab === "current",
+          })}
+          onClick={({ currentTarget }) => activateTab("current")}
+          ref={(el) => navigationTabs.current.push(el!)}
         >
           Atual
         </li>
@@ -69,12 +71,15 @@ export default function Navigation() {
           className={clsx({
             [styles.activeTab]: activeTab === "history",
           })}
-          onClick={({currentTarget}) => activateTab(currentTarget, "history")}
-          ref={el => navigationTabs.current.push(el!)}
+          onClick={({ currentTarget }) => activateTab("history")}
+          ref={(el) => navigationTabs.current.push(el!)}
         >
           Histórico
         </li>
-        <div className={styles.activeTabIndicator} ref={activeTabIndicator}></div>
+        <div
+          className={styles.activeTabIndicator}
+          ref={activeTabIndicator}
+        ></div>
       </ul>
     </nav>
   );
