@@ -37,6 +37,28 @@
   transform: scale(0.95);
 }
 
+.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.userPicturePopper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background-color: #F9FAFB;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.userPicturePopper:active {
+  transition: all 0.1s linear;
+  transform: scale(0.95);
+}
+
 .calorieInfoContainer {
   display: flex;
   flex-direction: column;
