@@ -1,6 +1,6 @@
 import { db } from '@/lib/firebase';
 import { goalConverter } from '../converters';
 
-export default function goalsCollection() {
+export function goalsCollection() {
   return db.collection('dailyConsumptionGoals').withConverter(goalConverter);
 }
