@@ -11,6 +11,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "clsx": "^2.0.0",
+    "firebase-admin": "^11.11.1",
     "framer-motion": "^10.16.9",
     "next": "14.0.3",
     "next-auth": "^4.24.5",
