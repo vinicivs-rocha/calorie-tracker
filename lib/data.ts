@@ -1,7 +1,7 @@
-import { feedingsCollection, goalsCollection } from '@/utils/collections/';
+import { feedings, goals } from "@/utils/collections";
 
 export async function getCalorieGoal(userUid: string): Promise<number> {
-  const userDailyConsumptionGoals = await goalsCollection().doc(userUid).get();
+  const userDailyConsumptionGoals = await goals.doc(userUid).get();
   if (!userDailyConsumptionGoals.exists || !userDailyConsumptionGoals.data())
     return 0;
   const { calories } = userDailyConsumptionGoals.data()!;
@@ -10,10 +10,7 @@ export async function getCalorieGoal(userUid: string): Promise<number> {
 }
 
 export async function getCaloriesIntake(userUid: string): Promise<number> {
-  const lastFeeding = await feedingsCollection(userUid)
-    .orderBy('createdAt', 'desc')
-    .limit(1)
-    .get();
+  const lastFeeding = await feedings(userUid).orderBy('createdAt', 'desc').limit(1).get();
   const { intake } = lastFeeding.docs[0].data();
   return intake;
 }
