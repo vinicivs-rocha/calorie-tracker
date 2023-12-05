@@ -1,7 +1,7 @@
-import { feedings } from "@/utils/collections";
+import { getLastFeeding } from "@/utils/documents";
 
 export async function getCaloriesIntake(userUid: string): Promise<number> {
-  const lastFeeding = await feedings(userUid).orderBy('createdAt', 'desc').limit(1).get();
+  const lastFeeding = await getLastFeeding(userUid);
   const { intake } = lastFeeding.docs[0].data();
   return intake;
 }
