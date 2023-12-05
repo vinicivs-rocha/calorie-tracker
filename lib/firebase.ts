@@ -1,9 +1,9 @@
-import { credential, initializeApp, ServiceAccount } from "firebase-admin";
+import { initializeApp, cert, getApps } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
-import serviceAccount from '../serviceAccountKey.json';
 
-initializeApp({
-  credential: credential.cert(serviceAccount as ServiceAccount),
-})
+if (!getApps().length)
+  initializeApp({
+    credential: cert('/home/vinicius/calorie-tracker/serviceAccountKey.json'),
+  })
 
 export const db = getFirestore();
