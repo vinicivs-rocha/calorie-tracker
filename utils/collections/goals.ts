@@ -1,6 +1,4 @@
-import { db } from '@/lib/firebase';
-import { goalConverter } from '../converters';
+import { Goal } from "@/types/documents";
+import { collectionPointer } from "../collection-pointer";
 
-export function goalsCollection() {
-  return db.collection('dailyConsumptionGoals').withConverter(goalConverter);
-}
+export const goals = collectionPointer<Goal>('dailyConsumptionGoals');

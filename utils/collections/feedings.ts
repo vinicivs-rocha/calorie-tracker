@@ -1,6 +1,4 @@
-import { db } from "@/lib/firebase";
-import { feedingConverter } from "../converters";
+import { Feeding } from "@/types/documents";
+import { collectionPointer } from "../collection-pointer";
 
-export function feedingsCollection(userUid: string) {
-  return db.collection(`userMeals/${userUid}/dailyFeeding`).withConverter(feedingConverter);
-}
+export const feedings = (userUid: string) => collectionPointer<Feeding>(`userMeals/${userUid}/dailyFeeding`);
