@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 import { usePopper } from 'react-popper';
 import clsx from 'clsx';
 import PopperButton from './popper';
+import { signOut } from 'next-auth/react';
 
 export default function UserPicture({ imageUrl }: { imageUrl: string }) {
   const [userPicturePopperOpen, setUserPicturePopperOpen] = useState(false);
@@ -43,6 +44,7 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
         />
       </div>
       <PopperButton
+        onClick={() => signOut()}
         className={clsx(styles.buttonPopper, {
           [styles.hidden]: !userPicturePopperOpen,
         })}
