@@ -43,6 +43,10 @@
   pointer-events: none;
 }
 
+.hiddenDiv {
+  display: none;
+}
+
 .buttonPopper {
   display: flex;
   flex-direction: row;

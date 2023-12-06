@@ -17,7 +17,7 @@ export default function MacrosData() {
   return (
     <div
       className={clsx({
-        [styles.hidden]: viewportWidth < 1400,
+        [styles.hiddenDiv]: viewportWidth < 1400,
         [styles.macrosData]: true,
       })}
     >
