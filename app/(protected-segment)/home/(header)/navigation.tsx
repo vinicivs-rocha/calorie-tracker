@@ -61,6 +61,7 @@ export default function Navigation() {
         <li
           className={clsx({
             [styles.activeTab]: activeTab === "current",
+            [styles.tab]: true,
           })}
           onClick={({ currentTarget }) => activateTab("current")}
           ref={(el) => navigationTabs.current.push(el!)}
@@ -70,8 +71,9 @@ export default function Navigation() {
         <li
           className={clsx({
             [styles.activeTab]: activeTab === "history",
+            [styles.tab]: true,
           })}
-          onClick={({ currentTarget }) => activateTab("history")}
+          onClick={() => activateTab("history")}
           ref={(el) => navigationTabs.current.push(el!)}
         >
           Histórico
