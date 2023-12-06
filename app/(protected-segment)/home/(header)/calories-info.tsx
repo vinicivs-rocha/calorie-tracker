@@ -1,9 +1,11 @@
-import styles from "@/app/(protected-segment)/home/(header)/header.module.css";
-import ProgressBar from "@/app/(protected-segment)/home/(header)/progress-bar";
+import styles from '@/app/(protected-segment)/home/(header)/header.module.css';
+import ProgressBar from '@/app/(protected-segment)/home/(header)/progress-bar';
 import CaloriesGoalNumber from './goal-number';
-import { getCalorieGoal, getCaloriesIntake } from "@/lib/data";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getCalorieGoal, getCaloriesIntake } from '@/lib/data';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import CaloriesText from './calories-text';
+import WindowWidthProvider from './window-provider';
 
 export default async function CaloriesInfo() {
   const session = await getServerSession(authOptions);
@@ -20,10 +22,12 @@ export default async function CaloriesInfo() {
   return (
     <div className={styles.calorieInfoContainer}>
       <div className={styles.calorieData}>
-        <span className={styles.goalText}>Sua meta de calorias diárias é:</span>
-        <CaloriesGoalNumber>
-          {numberWithCommas(caloriesGoal)}
-        </CaloriesGoalNumber>
+        <WindowWidthProvider>
+          <CaloriesText />
+          <CaloriesGoalNumber>
+            {numberWithCommas(caloriesGoal)}
+          </CaloriesGoalNumber>
+        </WindowWidthProvider>
       </div>
       <div>
         <ProgressBar progress={currentIntakePercentage} />
