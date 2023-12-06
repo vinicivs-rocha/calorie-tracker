@@ -2,7 +2,7 @@ import Image from 'next/image'
 import loginIllustration from '@/app/ui/assets/login-illutration.svg'
 import LoginButton from '@/app/(auth-segment)/button'
 import styles from '@/app/(auth-segment)/login.module.css'
-
+// TODO - fix content size
 export default  async function LoginPage() {
   return (
     <div className={styles.loginContainer}>
@@ -13,6 +13,7 @@ export default  async function LoginPage() {
           width={250}
           height={250}
           alt="Um homem sentado em uma cadeira comendo uma pizza."
+          priority={true}
         />
       </div>
       <div>
