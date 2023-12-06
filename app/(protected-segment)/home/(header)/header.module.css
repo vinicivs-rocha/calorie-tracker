@@ -66,7 +66,7 @@
   gap: 16px;
 }
 
-.calorieData {
+.consumptionData {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -160,12 +160,10 @@
   }
 
   .calorieInfoContainer {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    gap: 48px;
   }
 
-  .calorieData {
+  .consumptionData {
     flex-direction: column-reverse;
     align-items: flex-start;
     gap: 16px;
