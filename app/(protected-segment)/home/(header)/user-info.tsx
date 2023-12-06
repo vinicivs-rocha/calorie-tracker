@@ -4,8 +4,7 @@ import styles from '@/app/(protected-segment)/home/(header)/header.module.css'
 import UserPicture from "./picture";
 
 export default async function UserInfo() {
-  const session = await getServerSession(authOptions);
-  const { user } = session!;
+  const { user } = (await getServerSession(authOptions))!;
 
   return (
     <div className={styles.userInfoContainer}>

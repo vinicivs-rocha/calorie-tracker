@@ -41,6 +41,7 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
           alt='User profile picture.'
           width={35}
           height={35}
+          className={styles.userPictureImage}
         />
       </div>
       <PopperButton
