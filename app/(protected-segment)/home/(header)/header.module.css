@@ -14,6 +14,7 @@
   flex: content;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .username {
@@ -137,4 +138,47 @@
   height: 2px;
   background-color: #F3F4F6;
   border-radius: 1px;
+}
+
+@media (min-width: 1400px) {
+  .headerContainer {
+    gap: 48px;
+  }
+
+  .userPicture {
+    width: 50px;
+    height: 50px;
+  }
+
+  .userPictureImage {
+    width: 50px;
+    height: 50px;
+  }
+
+  .username {
+    height: fit-content;
+  }
+
+  .calorieInfoContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .calorieData {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .goalNumber {
+    padding: 20px;
+    border-radius: 16px;
+    font-size: 36px;
+  }
+
+  .goalText {
+    font-size: 24px;
+    font-weight: 400;
+  }
 }
