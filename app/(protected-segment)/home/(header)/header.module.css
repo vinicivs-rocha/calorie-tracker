@@ -209,4 +209,9 @@
     height: 1px;
     background-color: #F9FAFB;
   }
+
+  .navigationContainer {
+    font-size: 36px;
+    grid-template-columns: repeat(2, 170px);
+  }
 }
