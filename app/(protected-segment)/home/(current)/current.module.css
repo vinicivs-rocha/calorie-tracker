@@ -22,7 +22,13 @@
 
 .topButton:active {
   transition: scale 0.2s linear;
-  scale: 0.95;
+  scale: 0.95 !important;
+}
+
+.topButton:hover {
+  transition: scale 0.2s linear;
+  scale: 1.05;
+  cursor: pointer;
 }
 
 .addMealTopButton {
@@ -60,6 +66,10 @@
   font-weight: 600;
   display: flex;
   align-items: center;
+}
+
+.mealName:hover {
+  cursor: pointer;
 }
 
 .mealActions {
