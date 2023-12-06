@@ -7,6 +7,8 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CaloriesText from './calories-text';
 import WindowWidthProvider from './window-provider';
 import MacrosData from './macros';
+import MacroQuantity from './macro-quantity';
+
 
 export default async function CaloriesInfo() {
   const session = await getServerSession(authOptions);
@@ -15,6 +17,12 @@ export default async function CaloriesInfo() {
   const caloriesGoal = await getCalorieGoal(user.uid);
   const caloriesConsumed = await getCaloriesIntake(user.uid);
   const currentIntakePercentage = (caloriesConsumed / caloriesGoal) * 100;
+  // TODO - fetch macros from database
+  const macros = {
+    carbo: 35,
+    protein: 27,
+    fat: 21,
+  };
 
   function numberWithCommas(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -25,12 +33,16 @@ export default async function CaloriesInfo() {
       <WindowWidthProvider>
         <div className={styles.consumptionDataContainer}>
           <div className={styles.caloriesData}>
-              <CaloriesText />
-              <CaloriesGoalNumber>
-                {numberWithCommas(caloriesGoal)}
-              </CaloriesGoalNumber>
+            <CaloriesText />
+            <CaloriesGoalNumber>
+              {numberWithCommas(caloriesGoal)}
+            </CaloriesGoalNumber>
           </div>
-          <MacrosData />
+          <MacrosData>
+            {Object.entries(macros).map(([key, value]) => (
+              <MacroQuantity key={key} name={key} quantity={value} />
+            ))}
+          </MacrosData>
         </div>
       </WindowWidthProvider>
       <div>
