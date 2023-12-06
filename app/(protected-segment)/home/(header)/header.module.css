@@ -186,4 +186,27 @@
     font-size: 24px;
     font-weight: 400;
   }
+
+  .macrosData {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 28px;
+    padding: 10px;
+  }
+
+  .macrosItem {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #F8F9FA;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .macrosItemSeparator {
+    width: 100%;
+    height: 1px;
+    background-color: #F9FAFB;
+  }
 }
