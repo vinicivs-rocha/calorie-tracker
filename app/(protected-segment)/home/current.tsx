@@ -1,5 +1,5 @@
 import MealCard from "./(current)/meal-card";
-import StartDayButton from "./(current)/start-button";
+import TopButton from './(current)/top';
 import styles from "./(current)/current.module.css";
 import CurrentMealsFooter from "./(current)/footer";
 import { getServerSession } from "next-auth";
@@ -13,7 +13,7 @@ export default async function CurrentMeals() {
   return (
     <>
       <div className={styles.currentMealsContainer}>
-        <StartDayButton />
+        <TopButton />
         <div className={styles.mealCardsContainer}>
           {meals.map((meal) => (
             <MealCard key={meal.name} meal={meal} />
