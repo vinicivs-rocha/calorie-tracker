@@ -107,7 +107,8 @@
 @media (min-width: 1400px) {
   .currentMealsContainer {
     box-sizing: border-box;
-    padding: 0 44px;
+    padding: 12px 48px;
+    gap: 48px;
   }
 
   .currentTopContainer {
@@ -129,5 +130,31 @@
 
   .addMealTopButton {
     display: flex;
+  }
+
+  .mealCardsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 500px);
+    grid-template-rows: repeat(auto-fill, 80px);
+    justify-content: space-between;
+    row-gap: 24px;
+  }
+
+  .mealCardContainer {
+    height: fit-content;
+  }
+
+  .mealName {
+    font-size: 28px;
+    line-height: 28px;
+  }
+
+  .mealActions img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .footerContainer {
+    display: none;
   }
 }
