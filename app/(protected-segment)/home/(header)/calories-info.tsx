@@ -6,6 +6,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CaloriesText from './calories-text';
 import WindowWidthProvider from './window-provider';
+import MacrosData from './macros';
 
 export default async function CaloriesInfo() {
   const session = await getServerSession(authOptions);
@@ -21,14 +22,17 @@ export default async function CaloriesInfo() {
 
   return (
     <div className={styles.calorieInfoContainer}>
-      <div className={styles.calorieData}>
-        <WindowWidthProvider>
-          <CaloriesText />
-          <CaloriesGoalNumber>
-            {numberWithCommas(caloriesGoal)}
-          </CaloriesGoalNumber>
-        </WindowWidthProvider>
-      </div>
+      <WindowWidthProvider>
+        <div className={styles.consumptionDataContainer}>
+          <div className={styles.caloriesData}>
+              <CaloriesText />
+              <CaloriesGoalNumber>
+                {numberWithCommas(caloriesGoal)}
+              </CaloriesGoalNumber>
+          </div>
+          <MacrosData />
+        </div>
+      </WindowWidthProvider>
       <div>
         <ProgressBar progress={currentIntakePercentage} />
       </div>
