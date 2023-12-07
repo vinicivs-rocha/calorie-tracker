@@ -1,0 +1,1 @@
+export const getDocById = async <T>(collection: FirebaseFirestore.CollectionReference<T>, docId: string) => await collection.doc(docId).get();

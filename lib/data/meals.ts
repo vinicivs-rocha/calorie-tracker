@@ -1,13 +1,15 @@
-import { getUserId } from "../session";
-import { getLastFeedingSnapshot, getMealsSnapshots } from "@/utils/snapshots";
-import { getMeal } from "@/utils/documents";
+import { getUserId } from '../session';
+import { getDocData } from '@/utils';
+import { getLastDocument } from '@/utils';
+import { feedings, meals } from '@/utils/collections';
+import { getAllCollectionDocs } from '@/utils';
 
 export async function getMeals() {
   const userUid = await getUserId();
-  const { id: feedingId } = await getLastFeedingSnapshot(userUid);
+  const { id: feedingUid } = await getLastDocument(feedings(userUid));
 
-  const mealsSnapshots = await getMealsSnapshots(userUid, feedingId);
-  const meals = mealsSnapshots.map(getMeal);
-  
-  return Promise.all(meals);
+  const mealsDocs = await getAllCollectionDocs(meals(userUid, feedingUid));
+  const mealsData = mealsDocs.map(getDocData);
+
+  return Promise.all(mealsData);
 }
