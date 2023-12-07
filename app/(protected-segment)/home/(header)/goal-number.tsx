@@ -10,16 +10,24 @@ import { WindowWidthContext } from './window-context';
 import Image from 'next/image';
 import Link from 'next/link';
 
-function CaloriesGoalNumber({ children, userUid }: { children: React.ReactNode, userUid: string }) {
+function CaloriesGoalNumber({
+  children,
+  userUid,
+}: {
+  children: React.ReactNode;
+  userUid: string;
+}) {
   const [calorieGoalPopperOpen, setCalorieGoalPopperOpen] = useState(false);
   const goalNumberRef = useRef<HTMLButtonElement>(null);
   const popperRef = useRef<HTMLButtonElement>(null);
 
   const viewportWidth = useContext(WindowWidthContext);
-  function calculatePopperPosition(goalNumber: HTMLButtonElement | null): [number | undefined, number | undefined] {
+  function calculatePopperPosition(
+    goalNumber: HTMLButtonElement | null
+  ): [number | undefined, number | undefined] {
     if (!goalNumber) return [undefined, undefined];
-    if (viewportWidth >= 1400) return [0, 10]
-    return [goalNumber.clientHeight + 4, -(goalNumber.clientWidth)];
+    if (viewportWidth >= 1400) return [0, 10];
+    return [goalNumber.clientHeight + 4, -goalNumber.clientWidth];
   }
 
   const { styles: popperStyles, attributes } = usePopper(
@@ -53,18 +61,19 @@ function CaloriesGoalNumber({ children, userUid }: { children: React.ReactNode, 
       >
         {children}
       </button>
-      <PopperButton
-        className={clsx(styles.buttonPopper, {
-          [styles.hidden]: !calorieGoalPopperOpen,
-        })}
-        style={popperStyles.popper}
-        ref={popperRef}
-        {...attributes.popper}      >
-        <Link href={`/calories/goal/${userUid}`} className={styles.link}>
+      <Link href={`/calories/goal/${userUid}`}>
+        <PopperButton
+          className={clsx(styles.buttonPopper, {
+            [styles.hidden]: !calorieGoalPopperOpen,
+          })}
+          style={popperStyles.popper}
+          ref={popperRef}
+          {...attributes.popper}
+        >
           <span className={styles.popperText}>Atualizar meta</span>
           <Image src={updateGoal} alt='' width={15} height={15} />
-        </Link>
-      </PopperButton>
+        </PopperButton>
+      </Link>
     </>
   );
 }
