@@ -1,11 +1,9 @@
-import { getLastFeeding } from "@/utils/documents";
-import { getUserId } from "../session";
+import { getLastFeeding } from '@/utils/documents';
+import { getUserId } from '../session';
 
 export async function getCaloriesIntake(): Promise<number> {
   const userUid = await getUserId();
 
-
-  const lastFeeding = await getLastFeeding(userUid);
-  const { intake } = lastFeeding.data();
+  const { intake } = await getLastFeeding(userUid);
   return intake;
 }
