@@ -2,27 +2,18 @@ import styles from '@/app/(protected-segment)/home/(header)/header.module.css';
 import ProgressBar from '@/app/(protected-segment)/home/(header)/progress-bar';
 import CaloriesGoalNumber from './goal-number';
 import { getCalorieGoal, getCaloriesIntake } from '@/lib/data';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import CaloriesText from './calories-text';
 import WindowWidthProvider from './window-provider';
 import MacrosData from './macros';
 import MacroQuantity from './macro-quantity';
-
+import { getLastFeedingMacros } from '@/lib/data/macros';
 
 export default async function CaloriesInfo() {
-  const session = await getServerSession(authOptions);
-  const { user } = session!;
 
-  const caloriesGoal = await getCalorieGoal(user.uid);
-  const caloriesConsumed = await getCaloriesIntake(user.uid);
+  const caloriesGoal = await getCalorieGoal();
+  const caloriesConsumed = await getCaloriesIntake();
   const currentIntakePercentage = (caloriesConsumed / caloriesGoal) * 100;
-  // TODO - fetch macros from database
-  const macros = {
-    carbo: 35,
-    protein: 27,
-    fat: 21,
-  };
+  const macros = await getLastFeedingMacros();
 
   function numberWithCommas(x: number) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -39,7 +30,7 @@ export default async function CaloriesInfo() {
             </CaloriesGoalNumber>
           </div>
           <MacrosData>
-            {Object.entries(macros).map(([key, value]) => (
+            {Object.entries<number>(macros).map(([key, value]) => (
               <MacroQuantity key={key} name={key} quantity={value} />
             ))}
           </MacrosData>
