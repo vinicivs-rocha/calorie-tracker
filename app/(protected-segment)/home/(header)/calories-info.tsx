@@ -4,7 +4,7 @@ import { getCalorieGoal, getCaloriesIntake } from '@/lib/data';
 import WindowWidthProvider from './window-provider';
 import MacrosData from './macros';
 import MacroQuantity from './macro-quantity';
-import { getLastFeedingMacros } from '@/lib/data/macros';
+import { getLastFeedingMacros } from '@/lib/data/last-macros';
 import CaloriesData from './calories-data';
 
 export default async function CaloriesInfo() {
