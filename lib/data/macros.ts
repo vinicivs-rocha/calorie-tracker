@@ -1,9 +1,9 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getLastFeeding, getMacros } from '@/utils/documents';
-import { getServerSession } from 'next-auth';
+import { getUserId } from '../session';
 
 export async function getLastFeedingMacros() {
-  const { user } = (await getServerSession(authOptions))!;
-  const lastFeeding = await getLastFeeding(user.uid);
+  const userUid = await getUserId();
+
+  const lastFeeding = await getLastFeeding(userUid);
   return getMacros(lastFeeding);
 }

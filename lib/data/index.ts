@@ -4,4 +4,6 @@ export * from './calories-intake'
 
 export * from './meals'
 
+export * from './macros'
+
 

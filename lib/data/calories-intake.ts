@@ -1,11 +1,11 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getLastFeeding } from "@/utils/documents";
-import { getServerSession } from "next-auth";
+import { getUserId } from "../session";
 
 export async function getCaloriesIntake(): Promise<number> {
-  const { user } = (await getServerSession(authOptions))!;
+  const userUid = await getUserId();
 
-  const lastFeeding = await getLastFeeding(user.uid);
+
+  const lastFeeding = await getLastFeeding(userUid);
   const { intake } = lastFeeding.data();
   return intake;
 }

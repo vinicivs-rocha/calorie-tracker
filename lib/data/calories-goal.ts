@@ -1,13 +1,10 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { goals } from "@/utils/collections";
-import { getServerSession } from "next-auth";
+import { getUserId } from "../session";
 
 export async function getCalorieGoal(): Promise<number> {
-  const { user } = (await getServerSession(authOptions))!;
+  const userUid = await getUserId();
 
-  const userDailyConsumptionGoals = await goals.doc(user.uid).get();
-  if (!userDailyConsumptionGoals.exists || !userDailyConsumptionGoals.data())
-    return 0;
+  const userDailyConsumptionGoals = await goals.doc(userUid).get();
   const { calories } = userDailyConsumptionGoals.data()!;
 
   return calories;
