@@ -51,10 +51,11 @@ export default function UserPicture({ imageUrl }: { imageUrl: string }) {
         })}
         style={popperStyles.popper}
         ref={popperRef}
-        text='Encerrar sessão'
-        image={exitSign}
         {...attributes.popper}
-      />
+      >
+        <span className={styles.popperText}>Encerrar sessão</span>
+        <Image src={exitSign} alt='' width={15} height={15} />
+      </PopperButton>
     </>
   );
 }
