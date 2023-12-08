@@ -6,7 +6,7 @@ import { getDocData } from '@/utils';
 export async function getLastFeedingMacros() {
   const userUid = await getUserId();
 
-  const lastFeeding = await getLastDocument(feedings(userUid));
+  const lastFeeding = await getLastDocument(feedings(userUid)) ?? { exists: false };
   if (!lastFeeding.exists) {
     return {
       carbs: 0,

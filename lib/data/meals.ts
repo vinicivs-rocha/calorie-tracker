@@ -6,9 +6,13 @@ import { getAllCollectionDocs } from '@/utils';
 
 export async function getMeals() {
   const userUid = await getUserId();
-  const { id: feedingUid } = await getLastDocument(feedings(userUid));
+  const feeding = await getLastDocument(feedings(userUid)) ?? { exists: false };
 
-  const mealsDocs = await getAllCollectionDocs(meals(userUid, feedingUid));
+  if (!feeding.exists) {
+    return [];
+  }
+
+  const mealsDocs = await getAllCollectionDocs(meals(userUid, feeding.id));
   const mealsData = mealsDocs.map(getDocData);
 
   return Promise.all(mealsData);
