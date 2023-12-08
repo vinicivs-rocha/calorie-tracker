@@ -4,6 +4,7 @@ import styles from './goal-edit.module.css';
 import backSign from '@/app/ui/assets/back-sign.svg';
 import { poppins } from '@/app/fonts';
 
+// TODO - implement goal updating server action
 export default function GoalEditPage() {
   return (
     <div className={styles.pageContainer}>
