@@ -11,7 +11,7 @@ export default function MacroQuantity({ name, quantity }: { name: string, quanti
       case 'fat':
         return 'Gorduras'
       default:
-        break;
+        return 'Sem dados'
     }
   }
   return (
