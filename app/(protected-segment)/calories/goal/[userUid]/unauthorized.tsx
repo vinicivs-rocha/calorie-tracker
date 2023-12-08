@@ -5,7 +5,7 @@ import { poppins } from '@/app/fonts';
 
 export default function Unauthorized() {
   return (
-    <div className={styles.unauthorizedContainer}>
+    <div className={styles.pageContainer}>
       <h1 className={`${styles.unauthorizedTitle} ${poppins.className}`}>
         Este usuário não tem permissão para modificar o objetivo de outro
         usuário!
