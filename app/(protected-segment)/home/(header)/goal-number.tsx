@@ -19,7 +19,7 @@ function CaloriesGoalNumber({
 }) {
   const [calorieGoalPopperOpen, setCalorieGoalPopperOpen] = useState(false);
   const goalNumberRef = useRef<HTMLButtonElement>(null);
-  const popperRef = useRef<HTMLButtonElement>(null);
+  const popperRef = useRef<HTMLAnchorElement>(null);
 
   const viewportWidth = useContext(WindowWidthContext);
   function calculatePopperPosition(
@@ -61,14 +61,17 @@ function CaloriesGoalNumber({
       >
         {children}
       </button>
-      <Link href={`/calories/goal/${userUid}`}>
+      <Link
+        className={styles.link}
+        href={`/calories/goal/${userUid}`}
+        style={popperStyles.popper}
+        ref={popperRef}
+        {...attributes.popper}
+      >
         <PopperButton
           className={clsx(styles.buttonPopper, {
             [styles.hidden]: !calorieGoalPopperOpen,
           })}
-          style={popperStyles.popper}
-          ref={popperRef}
-          {...attributes.popper}
         >
           <span className={styles.popperText}>Atualizar meta</span>
           <Image src={updateGoal} alt='' width={15} height={15} />
