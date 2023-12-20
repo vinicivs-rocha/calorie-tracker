@@ -11,18 +11,22 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "clsx": "^2.0.0",
-    "firebase-admin": "^11.11.1",
+    "firebase-admin": "^12.0.0",
     "framer-motion": "^10.16.9",
     "next": "14.0.3",
     "next-auth": "^4.24.5",
     "react": "^18",
     "react-dom": "^18",
-    "react-popper": "^2.3.0"
+    "react-popper": "^2.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "commitlint": "^18.4.3",
+    "commitlint-config-gitmoji": "^2.3.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.1.0",
