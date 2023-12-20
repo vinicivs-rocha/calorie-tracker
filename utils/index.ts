@@ -4,3 +4,4 @@ export * from './doc-by-id';
 export * from './doc-data';
 export * from './document-converter';
 export * from './last-doc';
+export * from './set-goal';

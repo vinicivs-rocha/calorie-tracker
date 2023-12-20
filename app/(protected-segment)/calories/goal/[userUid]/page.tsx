@@ -1,11 +1,17 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './goal-edit.module.css';
 import backSign from '@/app/ui/assets/back-sign.svg';
 import { poppins } from '@/app/fonts';
+import { updateGoal } from '@/lib/actions';
 
-// TODO - implement goal updating server action
-export default function GoalEditPage() {
+export default function GoalEditPage({
+  params,
+}: {
+  params: { userUid: string };
+}) {
   return (
     <div className={styles.pageContainer}>
       <header className={styles.header}>
@@ -17,7 +23,15 @@ export default function GoalEditPage() {
           <span>Você poderá mudar ela a qualquer momento!</span>
         </div>
       </header>
-      <form className={styles.form}>
+      <form action={updateGoal} className={styles.form}>
+        <input
+          type='number'
+          name='userUid'
+          id='userUid'
+          value={params.userUid}
+          className={styles.userUidInput}
+          readOnly
+        />
         <main className={styles.main}>
           <div className={styles.goalInput}>
             <input
@@ -27,7 +41,9 @@ export default function GoalEditPage() {
               placeholder='Digite a nova meta'
               className={poppins.className}
             />
-            <label htmlFor='goal' className={poppins.className}>kCal</label>
+            <label htmlFor='goal' className={poppins.className}>
+              kCal
+            </label>
           </div>
         </main>
         <footer className={styles.footer}>
