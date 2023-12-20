@@ -1,9 +1,9 @@
-import { initializeApp, cert, getApps } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import admin from "firebase-admin";
+import 'server-only';
 
-if (!getApps().length)
-  initializeApp({
-    credential: cert('/home/vinicius/calorie-tracker/serviceAccountKey.json'),
+if (!(admin.apps.length > 0))
+  admin.initializeApp({
+    credential: admin.credential.cert('/home/vinicius/calorie-tracker/serviceAccountKey.json'),
   })
 
-export const db = getFirestore();
+export const db = admin.firestore();
