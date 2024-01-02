@@ -5,7 +5,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
-// TODO - Add error handling
 export const updateGoal = async (formData: FormData) => {
   try {
     const userUid = formData.get('userUid') as string;
@@ -13,11 +12,11 @@ export const updateGoal = async (formData: FormData) => {
     const updateData = updateFields.parse({ userUid, goal });
 
     await updateGoalUtil(updateData.userUid, updateData.goal);
-    revalidatePath(`/home`);
-    redirect(`/home`);
   } catch (error) {
     console.log(error);
   }
+  revalidatePath(`/home`);
+  redirect(`/home`);
 };
 
 const updateFields = z.object({
