@@ -9,6 +9,7 @@ import updateGoal from '@/app/ui/assets/update-goal.svg';
 import { WindowWidthContext } from './window-context';
 import Image from 'next/image';
 import Link from 'next/link';
+import { poppins } from '@/app/fonts';
 
 function CaloriesGoalNumber({
   children,
@@ -55,7 +56,7 @@ function CaloriesGoalNumber({
   return (
     <>
       <button
-        className={styles.goalNumber}
+        className={`${styles.goalNumber} ${poppins.className}`}
         ref={goalNumberRef}
         onClick={() => setCalorieGoalPopperOpen(!calorieGoalPopperOpen)}
       >
