@@ -4,6 +4,7 @@ import Image from 'next/image';
 import loginIcon from "@/app/ui/assets/login-icon.svg";
 import styles from '@/app/(auth-segment)/login.module.css';
 import { signIn } from 'next-auth/react';
+import { poppins } from '../fonts';
 
 export default function LoginButton() {
   const handleClick = async () => {
@@ -20,7 +21,10 @@ export default function LoginButton() {
         width={24}
         height={24}
       />
-      <span className={styles.buttonText}>Entrar com o Google</span>
+      <span className={`
+        ${styles.buttonText}
+        ${poppins.className}
+      `}>Entrar com o Google</span>
     </button>
   )
 }
