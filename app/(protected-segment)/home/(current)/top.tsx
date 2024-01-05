@@ -15,7 +15,7 @@ export default function TopButton() {
         <span className={poppins.className}>Iniciar novo dia</span>
       </button>
       <Link
-        href='/newMeal'
+        href='/new-meal'
         className={`${styles.topButton} ${styles.addMealTopButton}`}
       >
         <Image src={plusSign} alt='' width={12} height={12} />
