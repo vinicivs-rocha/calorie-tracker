@@ -17,7 +17,7 @@ export default function NewMealPage() {
     <>
       <div className={styles.container}>
         <header className={styles.header}>
-          <Image src={backSign} alt='' height={12} width={12} />
+          <Image className={styles.backSign} src={backSign} alt='' height={12} width={12} />
           <h1 className={`${poppins.className} ${styles.heading}`}>Adicione sua refeição</h1>
         </header>
         <main className={styles.main}>

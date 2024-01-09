@@ -170,6 +170,14 @@
   outline: none;
   background-color: transparent;
   font-size: 12px;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.quantityInput::-webkit-inner-spin-button,
+.quantityInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .quantityUnit {
@@ -184,6 +192,13 @@
   padding: 8px 8px;
 }
 
+.buttonsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .addingButton {
   display: flex;
   justify-content: center;
@@ -191,6 +206,15 @@
   padding: 12px 12px;
   border-radius: 20px;
   background-color: #FEF08A;
+}
+
+.cancelAddingButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 12px;
+  border-radius: 20px;
+  background-color: #FECACA;
 }
 
 .footer {
@@ -208,4 +232,58 @@
   font-size: 16px;
   color: #343A40;
   border: none;
+}
+
+@media (min-width: 1440px) {
+  .backSign {
+    display: none;
+  }
+
+  .heading {
+    font-size: 48px;
+  }
+
+  .mealName {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nameInput {
+    width: 300px;
+  }
+
+  .foods {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 48px;
+  }
+
+  .addedFood {
+    width: fit-content;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nutritionalData {
+    max-width: fit-content;
+    padding: 34px 0;
+  }
+
+  .addButton {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 0 142px ;
+  }
+
+  .addingFood {
+    width: 299px;
+    height: 100%;
+  }
+
+  .footer {
+    width: 304px;
+  }
 }
