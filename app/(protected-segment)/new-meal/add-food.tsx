@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import plusSign from '@/app/ui/assets/plus-sign.svg';
 import check from '@/app/ui/assets/check.svg';
+import crossSign from '@/app/ui/assets/cross-icon.svg';
 import styles from './new-meal.module.css';
 import {
   Select,
@@ -21,7 +22,7 @@ export default function AddFoodButton() {
 
   if (!active) {
     return (
-      <button className={styles.addButton} onClick={() => setActive(!active)}>
+      <button className={styles.addButton} onClick={() => setActive(true)}>
         <Image src={plusSign} alt='' width={16} height={16} />
       </button>
     );
@@ -48,9 +49,14 @@ export default function AddFoodButton() {
         <input className={styles.quantityInput} type='number' name='quantity' placeholder='Digite a quantidade'/>
         <span className={styles.quantityUnit}>g</span>
       </div>
-      <button className={styles.addingButton}>
-        <Image src={check} alt='' height={12} width={12} />
-      </button>
+      <div className={styles.buttonsContainer}>
+        <button className={styles.cancelAddingButton} onClick={() => setActive(false)}>
+          <Image src={crossSign} alt='' height={12} width={12} />
+        </button>
+        <button className={styles.addingButton}>
+          <Image src={check} alt='' height={12} width={12} />
+        </button>
+      </div>
     </div>
   );
 }
