@@ -1,7 +1,7 @@
 import { getUserId } from '../session';
-import { getLastDocument } from '@/utils';
-import { feedings } from '@/utils/collections';
-import { getDocData } from '@/utils';
+import { getLastDocument } from '@/lib/utils';
+import { feedings } from '@/lib/utils/collections';
+import { getDocData } from '@/lib/utils';
 
 export async function getLastFeedingMacros() {
   const userUid = await getUserId();

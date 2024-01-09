@@ -1,7 +1,7 @@
 import { getUserId } from '../session';
-import { getLastDocument } from '@/utils/last-doc';
-import { feedings } from '@/utils/collections';
-import { getDocData } from '@/utils';
+import { getLastDocument } from '@/lib/utils/last-doc';
+import { feedings } from '@/lib/utils/collections';
+import { getDocData } from '@/lib/utils';
 
 export async function getCaloriesIntake(): Promise<number> {
   const userUid = await getUserId();

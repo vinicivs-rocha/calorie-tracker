@@ -1,7 +1,7 @@
-import { getDocById } from '@/utils/doc-by-id';
+import { getDocById } from '@/lib/utils/doc-by-id';
 import { getUserId } from '../session';
-import { goals } from '@/utils/collections';
-import { getDocData } from '@/utils';
+import { goals } from '@/lib/utils/collections';
+import { getDocData } from '@/lib/utils';
 
 export async function getCalorieGoal(): Promise<number> {
   const userUid = await getUserId();

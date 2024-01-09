@@ -2,7 +2,7 @@
 
 import admin from 'firebase-admin';
 import { getUserId } from '../session';
-import { feedings } from '@/utils/collections';
+import { feedings } from '@/lib/utils/collections';
 import { revalidatePath } from 'next/cache';
 
 export async function initNewFeeding() {

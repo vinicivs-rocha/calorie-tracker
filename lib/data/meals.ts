@@ -1,8 +1,8 @@
 import { getUserId } from '../session';
-import { getDocData } from '@/utils';
-import { getLastDocument } from '@/utils';
-import { feedings, meals } from '@/utils/collections';
-import { getAllCollectionDocs } from '@/utils';
+import { getDocData } from '@/lib/utils';
+import { getLastDocument } from '@/lib/utils';
+import { feedings, meals } from '@/lib/utils/collections';
+import { getAllCollectionDocs } from '@/lib/utils';
 import { Meal } from '@/types/documents';
 import { ErrorMessage } from '@/types/error';
 
