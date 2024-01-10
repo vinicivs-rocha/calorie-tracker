@@ -1,19 +1,23 @@
+'use client';
+
 import React from 'react';
-import styles from './new-meal.module.css'
+import styles from './new-meal.module.css';
+import { motion } from 'framer-motion';
+import { FoodDTO } from '@/types/food';
 
 export default function Food({
   name,
   carboQuantity,
   proteinQuantity,
   fatQuantity,
-}: {
-  name: string;
-  carboQuantity: number;
-  proteinQuantity: number;
-  fatQuantity: number;
-}) {
+}: FoodDTO) {
   return (
-    <div className={styles.addedFood}>
+    <motion.div
+      className={styles.addedFood}
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.2 , type: 'spring', stiffness: 200, damping: 9 }}
+    >
       <p className={styles.foodName}>{name}</p>
       <div className={styles.nutritionalData}>
         <div className={styles.macro}>
@@ -29,6 +33,6 @@ export default function Food({
           <span className={styles.macroName}>Gorduras</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
