@@ -255,6 +255,7 @@
   }
 
   .foods {
+    height: 170px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
