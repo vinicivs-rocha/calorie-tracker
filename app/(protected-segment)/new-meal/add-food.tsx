@@ -6,23 +6,18 @@ import React, {
   useEffect,
   useState,
   useRef,
+  useCallback,
 } from 'react';
 import Image from 'next/image';
-import plusSign from '@/app/ui/assets/plus-sign.svg';
 import check from '@/app/ui/assets/check.svg';
 import crossSign from '@/app/ui/assets/cross-icon.svg';
 import styles from './new-meal.module.css';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/app/ui/components/ui/select';
 import { FoodDTO } from '@/types/food';
 import { motion, AnimatePresence, useAnimate } from 'framer-motion';
+import TacoItems from './taco-items';
+import { ApolloProvider, gql, useQuery } from '@apollo/client';
+import { client } from '@/lib/graphql';
+import plusSign from '@/app/ui/assets/plus-sign.svg';
 
 export default function AddFoodButton({
   setAddedFoods,
@@ -40,15 +35,7 @@ export default function AddFoodButton({
     return {
       ...prev,
       totalQuantity,
-      carboQuantity: 10,
-      proteinQuantity: 10,
-      fatQuantity: 10,
     };
-  }
-
-  function confirmAdding() {
-    setAddedFoods((prev) => [...prev, selectedFood]);
-    setActive(false);
   }
 
   const activeRef = useRef<HTMLDivElement>(null);
@@ -56,8 +43,62 @@ export default function AddFoodButton({
   const [selectedFood, setSelectedFood] = useState<FoodDTO>({});
   const [isSelectOpen, setIsSelectOpen] = useState(false);
 
-  const TACOFoods = ['Arroz', 'Feijão', 'Carne', 'Ovo', 'Salada'];
+  const useFoodDataQuery = useCallback(() => {
+    const query = gql`
+      query GetFoodById {
+        getFoodById(id: ${selectedFood.id}) {
+          id
+          name
+          nutrients {
+            carbohydrates
+            protein
+            lipids
+            kcal
+          }
+        }
+      }
+    `;
 
+    return query;
+  }, [selectedFood]);
+
+  const foodData = useQuery<{ getFoodById: FoodDTO }>(useFoodDataQuery());
+
+  const getFoodData = useCallback(
+    (prev: FoodDTO[]) => {
+      if (foodData.loading) {
+        return [];
+      }
+      if (foodData.error) {
+        console.log(foodData.error);
+        return [];
+      }
+      const { getFoodById: food } = foodData.data!;
+      const { totalQuantity, id } = selectedFood;
+      const { name, nutrients } = food;
+      const { carbohydrates, protein, lipids, kcal } = nutrients!;
+      return [
+        ...prev,
+        {
+          id,
+          totalQuantity,
+          name,
+          nutrients: {
+            carbohydrates: (carbohydrates! * totalQuantity!)  / 100,
+            protein: (protein! * totalQuantity!) / 100,
+            lipids: (lipids! * totalQuantity!) / 100,
+            kcal: (kcal! * totalQuantity!) / 100,
+          },
+        },
+      ];
+    },
+    [foodData, selectedFood]
+  );
+
+  function confirmAdding() {
+    setAddedFoods(getFoodData);
+    setActive(false);
+  }
   useEffect(() => {
     if (active && activeRef.current) {
       activeRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -87,28 +128,12 @@ export default function AddFoodButton({
             transition: { duration: 0.2, type: 'just' },
           }}
         >
-          <Select
-            onValueChange={(foodName) =>
-              setSelectedFood((prev) => ({ ...prev, name: foodName }))
-            }
-            onOpenChange={(isOpen) =>
-              setTimeout(() => setIsSelectOpen(isOpen), 10)
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder='Selecione um alimento' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Alimentos</SelectLabel>
-                {TACOFoods.map((food, index) => (
-                  <SelectItem value={food} key={index}>
-                    {food}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <ApolloProvider client={client}>
+            <TacoItems
+              setIsSelectOpen={setIsSelectOpen}
+              setSelectedFood={setSelectedFood}
+            />
+          </ApolloProvider>
           <div className={styles.quantityContainer}>
             <input
               className={styles.quantityInput}
