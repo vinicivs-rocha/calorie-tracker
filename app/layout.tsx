@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { poppins } from "@/app/fonts";
-import './globals.css'
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Rastreador de calorias',
