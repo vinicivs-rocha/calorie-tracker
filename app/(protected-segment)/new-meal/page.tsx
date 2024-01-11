@@ -4,22 +4,16 @@ import React, { useState } from 'react';
 import backSign from '@/app/ui/assets/back-sign.svg';
 import Image from 'next/image';
 import { poppins } from '@/app/fonts';
-import Food from './food';
-import AddFoodButton from './add-food';
 import styles from './new-meal.module.css';
+import AddedFoods from './added-foods';
+import ConfirmButton from './confirm-button';
 import { FoodDTO } from '@/types/food';
-import { motion } from 'framer-motion';
+import { createMeal } from '@/lib/actions/meal';
 
 export default function NewMealPage() {
-  const [addedFoods, setAddedFoods] = useState<FoodDTO[]>([
-    {
-      name: 'Arroz',
-      totalQuantity: 30,
-      carboQuantity: 10,
-      proteinQuantity: 10,
-      fatQuantity: 10,
-    },
-  ]);
+  const [addedFoods, setAddedFoods] = useState<FoodDTO[]>([]);
+  const [mealName, setMealName] = useState('');
+  const createMealAction = createMeal.bind(null, { mealName, addedFoods });
 
   return (
     <>
@@ -44,35 +38,14 @@ export default function NewMealPage() {
               type='text'
               name='mealName'
               placeholder='Digite o nome da nova refeição'
+              onChange={(event) => setMealName(event.target.value)}
             />
           </div>
-          <div className={styles.foods}>
-            {addedFoods.map(
-              (
-                { name, carboQuantity, fatQuantity, proteinQuantity },
-                index
-              ) => (
-                <Food
-                  name={name}
-                  carboQuantity={carboQuantity}
-                  fatQuantity={fatQuantity}
-                  proteinQuantity={proteinQuantity}
-                  key={index}
-                />
-              )
-            )}
-            <AddFoodButton setAddedFoods={setAddedFoods} />
-          </div>
+          <AddedFoods addedFoods={addedFoods} setAddedFoods={setAddedFoods} />
         </main>
       </div>
       <footer className={styles.footer}>
-        <motion.button
-          className={`${poppins.className} ${styles.confirmButton}`}
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 0.8 }}
-        >
-          Adicionar refeição
-        </motion.button>
+        <ConfirmButton onClick={() => createMealAction()} />
       </footer>
     </>
   );
