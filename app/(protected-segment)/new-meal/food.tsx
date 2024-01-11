@@ -7,9 +7,7 @@ import { FoodDTO } from '@/types/food';
 
 export default function Food({
   name,
-  carboQuantity,
-  proteinQuantity,
-  fatQuantity,
+  nutrients
 }: FoodDTO) {
   return (
     <motion.div
@@ -21,15 +19,15 @@ export default function Food({
       <p className={styles.foodName}>{name}</p>
       <div className={styles.nutritionalData}>
         <div className={styles.macro}>
-          <span className={styles.carboQuantity}>{carboQuantity}g</span>
+          <span className={styles.carboQuantity}>{nutrients!.carbohydrates}g</span>
           <span className={styles.macroName}>Carbos</span>
         </div>
         <div className={styles.macro}>
-          <span className={styles.proteinQuantity}>{proteinQuantity}g</span>
+          <span className={styles.proteinQuantity}>{nutrients!.protein}g</span>
           <span className={styles.macroName}>Proteínas</span>
         </div>
         <div className={styles.macro}>
-          <span className={styles.fatQuantity}>{fatQuantity}g</span>
+          <span className={styles.fatQuantity}>{nutrients!.lipids}g</span>
           <span className={styles.macroName}>Gorduras</span>
         </div>
       </div>

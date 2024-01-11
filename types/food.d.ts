@@ -1,7 +1,11 @@
 export type FoodDTO = {
+  id?: number;
   name?: string;
   totalQuantity?: number;
-  carboQuantity?: number;
-  proteinQuantity?: number;
-  fatQuantity?: number;
+  nutrients?: {
+    carbohydrates?: number;
+    protein?: number;
+    lipids?: number;
+    kcal?: number;
+  };
 };
