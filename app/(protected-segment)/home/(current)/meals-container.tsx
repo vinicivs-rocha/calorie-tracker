@@ -11,8 +11,8 @@ export default async function MealCardsContainer() {
       </h2>
     );
 
-  const mealCards = meals.map((meal) =>
-    meal ? <MealCard key={meal.name} meal={meal} /> : <></>
+  const mealCards = meals.map((meal, index) =>
+    meal ? <MealCard key={index} meal={meal} /> : <></>
   );
 
   if (mealCards.length === 0)
