@@ -18,7 +18,7 @@ export default function MacroQuantity({ name, quantity }: { name: string, quanti
     <div className={styles.macrosItem}>
       <span>{formatName(name)}</span>
       <div className={styles.macrosItemSeparator}/>
-      <span>{quantity}g</span>
+      <span>{quantity.toFixed(1)}g</span>
     </div>
   )
 }
