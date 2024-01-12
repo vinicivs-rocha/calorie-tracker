@@ -9,14 +9,41 @@ import AddedFoods from './added-foods';
 import ConfirmButton from './confirm-button';
 import { FoodDTO } from '@/types/food';
 import { createMeal } from '@/lib/actions/meal';
+import { useFormState } from 'react-dom';
+import ErrorAlert from '@/app/error-alert';
 
 export default function NewMealPage() {
   const [addedFoods, setAddedFoods] = useState<FoodDTO[]>([]);
   const [mealName, setMealName] = useState('');
-  const createMealAction = createMeal.bind(null, { mealName, addedFoods });
+  const createMealAction = createMeal.bind(null, null, {
+    mealName,
+    addedFoods,
+  });
+  const [formState, formAction] = useFormState(createMealAction, {
+    errors: {
+      mealName: [],
+      addedFoods: [],
+    },
+  });
+
+  const { mealName: mealNameErrors, addedFoods: addedFoodsErrors } =
+    formState.errors;
+
+  function formatErrors(errors: string[] | undefined = []) {
+    if (errors === undefined) return [];
+    return errors;
+  }
 
   return (
     <>
+      <div className='absolute w-auto flex flex-col gap-2'>
+        <ErrorAlert
+          errors={formatErrors(mealNameErrors).concat(
+            formatErrors(addedFoodsErrors)
+          )}
+          cause='adicionar refeição'
+        />
+      </div>
       <div className={styles.container}>
         <header className={styles.header}>
           <Image
@@ -45,7 +72,7 @@ export default function NewMealPage() {
         </main>
       </div>
       <footer className={styles.footer}>
-        <ConfirmButton onClick={() => createMealAction()} />
+        <ConfirmButton onClick={() => formAction()} />
       </footer>
     </>
   );
