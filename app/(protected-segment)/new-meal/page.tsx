@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import backSign from '@/app/ui/assets/back-sign.svg';
 import Image from 'next/image';
 import { poppins } from '@/app/fonts';
@@ -11,6 +11,7 @@ import { FoodDTO } from '@/types/food';
 import { createMeal } from '@/lib/actions/meal';
 import { useFormState } from 'react-dom';
 import ErrorAlert from '@/app/error-alert';
+import { AnimatePresence } from 'framer-motion';
 
 export default function NewMealPage() {
   const [addedFoods, setAddedFoods] = useState<FoodDTO[]>([]);
@@ -25,9 +26,24 @@ export default function NewMealPage() {
       addedFoods: [],
     },
   });
+  const [formErrors, setFormErrors] = useState(formState);
+
+  useEffect(() => {
+    setFormErrors(formState);
+    setTimeout(() => {
+      setFormErrors({
+        errors: {
+          mealName: [],
+          addedFoods: [],
+        },
+      });
+    }, 3000);
+  }, [formState]);
+
+  console.log(addedFoods)
 
   const { mealName: mealNameErrors, addedFoods: addedFoodsErrors } =
-    formState.errors;
+    formErrors.errors;
 
   function formatErrors(errors: string[] | undefined = []) {
     if (errors === undefined) return [];
@@ -36,7 +52,7 @@ export default function NewMealPage() {
 
   return (
     <>
-      <div className='absolute w-auto flex flex-col gap-2'>
+      <div className='absolute flex w-auto flex-col gap-2 xl:top-4 xl:right-4'>
         <ErrorAlert
           errors={formatErrors(mealNameErrors).concat(
             formatErrors(addedFoodsErrors)

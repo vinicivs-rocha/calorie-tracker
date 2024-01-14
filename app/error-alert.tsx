@@ -17,23 +17,21 @@ export default function ErrorAlert({
   errors: string[];
   cause: string;
 }) {
-  if (errors.length === 0) return null;
-
   return (
-    <AnimatePresence>
+    <AnimatePresence mode='wait'>
       {errors.map((message) => (
         <motion.div
           key={message}
           initial={{ x: 1000, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -1000, opacity: 0 }}
+          animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
+          exit={{ x: -1000, opacity: 0 , transition: { duration: 0.3 }}}
         >
           <Alert className='bg-red-300' variant='destructive'>
-            <ExclamationTriangleIcon className='h-3 w-3' color='black' />
-            <AlertTitle className='text-sm text-slate-700'>
+            <ExclamationTriangleIcon className='h-3 w-3' color='white' />
+            <AlertTitle className='text-sm text-zinc-100'>
               Erro ao {cause}
             </AlertTitle>
-            <AlertDescription className='text-xs text-slate-700'>
+            <AlertDescription className='text-xs text-zinc-100'>
               {message}
             </AlertDescription>
           </Alert>
