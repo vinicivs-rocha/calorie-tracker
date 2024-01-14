@@ -1,9 +1,10 @@
 import MealCard from './meal-card';
 import styles from './current.module.css';
-import { getMeals } from '@/lib/data';
+import { getMealData, getMealsSnapshots } from '@/lib/data';
+import { Suspense } from 'react';
 
 export default async function MealCardsContainer() {
-  const [meals, error] = await getMeals();
+  const [meals, error] = await getMealsSnapshots();
   if (error !== null)
     return (
       <h2 className={styles.notFoundText}>
@@ -11,9 +12,14 @@ export default async function MealCardsContainer() {
       </h2>
     );
 
-  const mealCards = meals.map((meal, index) =>
-    meal ? <MealCard key={index} meal={meal} /> : <></>
-  );
+  const mealCards = await Promise.all(meals.map(async (meal) => {
+    const mealData = await getMealData(meal);
+    return (
+      <Suspense key={meal.id} fallback={<p>Loading...</p>}>
+        <MealCard meal={mealData} id={meal.id} />
+      </Suspense>
+    );
+  }));
 
   if (mealCards.length === 0)
     return (
@@ -22,9 +28,5 @@ export default async function MealCardsContainer() {
       </h2>
     );
 
-  return (
-    <div className={styles.mealCardsContainer}>
-      {mealCards}
-    </div>
-  );
+  return <div className={styles.mealCardsContainer}>{mealCards}</div>;
 }
