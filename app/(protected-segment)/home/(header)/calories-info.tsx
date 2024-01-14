@@ -26,7 +26,7 @@ export default async function CaloriesInfo() {
         </div>
       </WindowWidthProvider>
       <div>
-        <ProgressBar progress={currentIntakePercentage} />
+        <ProgressBar progress={Math.min(currentIntakePercentage, 100)} barColor={currentIntakePercentage > 100 ? 'red' : 'white'} />
       </div>
     </div>
   );
