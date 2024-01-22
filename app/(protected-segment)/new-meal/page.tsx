@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import backSign from '@/app/ui/assets/back-sign.svg';
 import Image from 'next/image';
 import { poppins } from '@/app/fonts';
@@ -11,7 +11,7 @@ import { FoodDTO } from '@/types/food';
 import { createMeal } from '@/lib/actions/meal';
 import { useFormState } from 'react-dom';
 import ErrorAlert from '@/app/error-alert';
-import { AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 export default function NewMealPage() {
   const [addedFoods, setAddedFoods] = useState<FoodDTO[]>([]);
@@ -40,8 +40,6 @@ export default function NewMealPage() {
     }, 3000);
   }, [formState]);
 
-  console.log(addedFoods)
-
   const { mealName: mealNameErrors, addedFoods: addedFoodsErrors } =
     formErrors.errors;
 
@@ -62,13 +60,15 @@ export default function NewMealPage() {
       </div>
       <div className={styles.container}>
         <header className={styles.header}>
-          <Image
-            className={styles.backSign}
-            src={backSign}
-            alt=''
-            height={12}
-            width={12}
-          />
+          <Link href="/home">
+            <Image
+              className={styles.backSign}
+              src={backSign}
+              alt=''
+              height={12}
+              width={12}
+            />
+          </Link>
           <h1 className={`${poppins.className} ${styles.heading}`}>
             Adicione sua refeição
           </h1>
