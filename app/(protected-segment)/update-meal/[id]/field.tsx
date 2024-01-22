@@ -1,3 +1,5 @@
+import { poppins } from '@/app/fonts';
+import clsx from 'clsx';
 import styles from './update-meal.module.css';
 
 export default function FieldInput({
@@ -9,7 +11,7 @@ export default function FieldInput({
 }) {
   return (
     <div className={styles.fieldInput}>
-      <p className={styles.label}>{label}:</p>
+      <p className={clsx(styles.label, poppins.className)}>{label}:</p>
       {children}
     </div>
   );

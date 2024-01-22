@@ -34,13 +34,16 @@ export default function UpdateMealPage() {
           </FieldInput>
           <Foods>
             <AddedFoods>
-              {[].map((_, index) => (
-                <Food name={'Maçã'} key={index}>
-                  <NutritionalData>
-                    {[].map((_, index) => (
-                      <Macro amount={0.5} name={'Carbos'} key={index}/>
-                    ))}
-                  </NutritionalData>
+              {['Maçã'].map((name, index) => (
+                <Food key={index}>
+                  <div className={styles.foodData}>
+                    <h2 className={styles.foodName}>{name}</h2>
+                    <NutritionalData>
+                      {['Carbos', 'Proteínas', 'Gorduras'].map((name, index) => (
+                        <Macro amount={0.5} name={name} key={index}/>
+                      ))}
+                    </NutritionalData>
+                  </div>
                   <DeleteButton />
                 </Food>
               ))}
