@@ -18,7 +18,6 @@ import AddFoodButton from './add';
 import Footer from './footer';
 import ConfirmButton from './confirm';
 
-// TODO - add desktop styling
 export default function UpdateMealPage() {
   return (
     <div className={styles.page}>
