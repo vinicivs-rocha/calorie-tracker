@@ -18,12 +18,13 @@ import AddFoodButton from './add';
 import Footer from './footer';
 import ConfirmButton from './confirm';
 
+// TODO - add desktop styling
 export default function UpdateMealPage() {
   return (
     <div className={styles.page}>
       <MainContent>
         <Header>
-          <Link href='/home'>
+          <Link href='/home' className={styles.backSign}>
             <Image src={backSign} alt='' height={12} width={12} />
           </Link>
           <Heading>Altere sua refeição</Heading>
