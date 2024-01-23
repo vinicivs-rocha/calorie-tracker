@@ -31,7 +31,6 @@ export default function AddFoodButton({
   }
 
   function setQuantity(prev: FoodDTO, totalQuantity: number) {
-    // TODO - query macros data
     return {
       ...prev,
       totalQuantity,
