@@ -15,9 +15,6 @@ import { gql, useQuery } from '@apollo/client';
 import React, {
   Dispatch,
   SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
 } from 'react';
 
 export default function TacoItems({
@@ -39,18 +36,8 @@ export default function TacoItems({
     }
   `;
   const queryResult = useQuery<{ getAllCategories: CategoryDTO[] }>(query);
-
-  const getFoodsByCategory = useCallback(() => {
-    if (queryResult.loading) {
-      return [];
-    }
-    if (queryResult.error) {
-      return [];
-    }
-    return queryResult.data!.getAllCategories;
-  }, [queryResult]);
-
-  const foodsByCategory = getFoodsByCategory();
+  
+  const foodsByCategory = queryResult.data?.getAllCategories;
 
   return (
     <Select
