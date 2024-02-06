@@ -1,12 +1,13 @@
-import styles from "./update-meal.module.css";
-import Image from "next/image";
-import trashSign from "@/app/ui/assets/trash-sign.svg"
+import trashSign from '@/app/ui/assets/trash-sign.svg';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import styles from './update-meal.module.css';
 
-
+// TODO - Add context food deletion
 export default function DeleteButton() {
   return (
-    <button className={styles.delete}>
+    <motion.button initial={{ opacity: 0 }} className={styles.delete}>
       <Image src={trashSign} alt='' height={30} width={30} />
-    </button>
-  )
+    </motion.button>
+  );
 }
