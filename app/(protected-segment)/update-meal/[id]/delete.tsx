@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import styles from './update-meal.module.css';
 
-// TODO - Add context food deletion
 export default function DeleteButton() {
   const [dragOpacity] = useContext(DragOpacityContext);
   const opacity = dragOpacity > 1 ? 0 : dragOpacity;
