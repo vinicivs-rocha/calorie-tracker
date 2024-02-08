@@ -1,6 +1,7 @@
 'use client';
 
 import plusSign from '@/app/ui/assets/plus-sign.svg';
+import trashSign from '@/app/ui/assets/trash-sign.svg';
 import { MealDataContext } from '@/lib/contexts/meal';
 import { FoodDTO } from '@/types/food';
 import { gql, useQuery } from '@apollo/client';
@@ -13,12 +14,28 @@ import ConfirmAdding from './confirm-adding';
 import QuantityInput from './quantity';
 import styles from './update-meal.module.css';
 
+const variants = {
+  adding: { opacity: [0, 1], scale: 1 },
+  deleting: {
+    backgroundColor: '#dc2626',
+    opacity: [0, 1],
+    scale: 1,
+  },
+};
+
+const iconVariants = {
+  visible: { opacity: 1, scale: 1 },
+  hidden: { opacity: 0, scale: 0 },
+  exit: { opacity: 0, scale: 0 },
+};
+
 export default function AddFoodButton() {
-  const [_, setMealData] = useContext(MealDataContext);
+  const [mealData, setMealData] = useContext(MealDataContext);
   const activeRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
   const [selectedFood, setSelectedFood] = useState<FoodDTO>({});
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const isDeleting = mealData?.foods.some((food) => food.selected);
 
   function confirmAdding() {
     setAddedFoods(getFoodData);
@@ -83,11 +100,20 @@ export default function AddFoodButton() {
             lipids: (lipids! * totalQuantity!) / 100,
             kcal: (kcal! * totalQuantity!) / 100,
           },
+          selected: false,
         },
       ];
     },
     [foodData, selectedFood]
   );
+
+  function removeSelected() {
+    if (!setMealData) throw new Error('Meal data context not provided');
+    setMealData((prev) => ({
+      ...prev,
+      foods: prev.foods.filter((food) => !food.selected),
+    }));
+  }
 
   useEffect(() => {
     if (active && activeRef.current) {
@@ -132,14 +158,15 @@ export default function AddFoodButton() {
         <motion.button
           key='add-food'
           className={styles.add}
-          onClick={() => setActive(true)}
+          onClick={() => (isDeleting ? removeSelected() : setActive(true))}
           initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={isDeleting ? 'deleting' : 'adding'}
+          variants={variants}
           transition={{
             duration: 0.2,
             type: 'spring',
             stiffness: 200,
-            damping: 9,
+            damping: 35,
           }}
           exit={{
             opacity: 0,
@@ -150,7 +177,11 @@ export default function AddFoodButton() {
             transition: { type: 'just', duration: 0.2 },
           }}
         >
-          <Image src={plusSign} alt='' height={16} width={16} />
+          {isDeleting ? (
+            <Image src={trashSign} alt='' height={32} width={32} />
+          ) : (
+            <Image src={plusSign} alt='' height={16} width={16} />
+          )}
         </motion.button>
       )}
     </AnimatePresence>
