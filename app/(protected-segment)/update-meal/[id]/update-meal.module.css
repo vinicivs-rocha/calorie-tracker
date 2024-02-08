@@ -340,6 +340,13 @@
     flex-direction: column;
   }
 
+  .foodName {
+    width: auto;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+
   .nutritionalData {
     width: auto;
     padding: 24px 0px;
@@ -361,5 +368,15 @@
   .confirm {
     padding: 12px 40px;
     font-size: 24px;
+  }
+
+  .delete {
+    display: none;
+  }
+
+  .active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
