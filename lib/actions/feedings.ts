@@ -12,9 +12,9 @@ export async function initNewFeeding() {
       createdAt: admin.firestore.Timestamp.now(),
       intake: 0,
       macros: {
-        carbs: 0,
-        proteins: 0,
-        fats: 0,
+        carbo: 0,
+        protein: 0,
+        fat: 0,
       },
     });
   } catch (error) {

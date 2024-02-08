@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
-import styles from './new-meal.module.css';
-import { motion } from 'framer-motion';
 import { FoodDTO } from '@/types/food';
+import { motion } from 'framer-motion';
+import styles from './new-meal.module.css';
 
 export default function Food({
   name,
