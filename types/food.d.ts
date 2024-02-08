@@ -8,4 +8,5 @@ export type FoodDTO = {
     lipids?: number;
     kcal?: number;
   };
+  selected?: boolean;
 };
