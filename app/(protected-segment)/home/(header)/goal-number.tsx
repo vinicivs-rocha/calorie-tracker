@@ -1,15 +1,15 @@
 'use client';
 
-import { useContext, useRef, useState } from 'react';
-import styles from './header.module.css';
-import { usePopper } from 'react-popper';
-import PopperButton from './popper';
-import clsx from 'clsx';
+import { poppins } from '@/app/fonts';
 import updateGoal from '@/app/ui/assets/update-goal.svg';
-import { WindowWidthContext } from './window-context';
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { poppins } from '@/app/fonts';
+import { useContext, useRef, useState } from 'react';
+import { usePopper } from 'react-popper';
+import { WindowWidthContext } from '../../../../lib/contexts/window-context';
+import styles from './header.module.css';
+import PopperButton from './popper';
 
 function CaloriesGoalNumber({
   children,

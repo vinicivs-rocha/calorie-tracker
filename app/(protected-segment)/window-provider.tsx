@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { WindowWidthContext } from './window-context';
+import { WindowWidthContext } from '../../lib/contexts/window-context';
 
 export default function WindowWidthProvider({
   children,

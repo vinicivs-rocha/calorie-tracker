@@ -1,11 +1,11 @@
 import styles from '@/app/(protected-segment)/home/(header)/header.module.css';
 import ProgressBar from '@/app/(protected-segment)/home/(header)/progress-bar';
 import { getCalorieGoal, getCaloriesIntake } from '@/lib/data';
-import WindowWidthProvider from './window-provider';
-import MacrosData from './macros';
-import MacroQuantity from './macro-quantity';
 import { getLastFeedingMacros } from '@/lib/data/last-macros';
+import WindowWidthProvider from '../../window-provider';
 import CaloriesData from './calories-data';
+import MacroQuantity from './macro-quantity';
+import MacrosData from './macros';
 
 export default async function CaloriesInfo() {
   const caloriesGoal = await getCalorieGoal();

@@ -1,8 +1,8 @@
 'use client';
 
 import { useContext } from 'react';
+import { WindowWidthContext } from '../../../../lib/contexts/window-context';
 import styles from './header.module.css';
-import { WindowWidthContext } from './window-context';
 
 export default function CaloriesText() {
   const viewportWidth = useContext(WindowWidthContext);

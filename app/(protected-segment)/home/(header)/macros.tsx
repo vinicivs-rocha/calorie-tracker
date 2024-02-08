@@ -2,8 +2,8 @@
 
 import clsx from 'clsx';
 import React, { useContext } from 'react';
+import { WindowWidthContext } from '../../../../lib/contexts/window-context';
 import styles from './header.module.css';
-import { WindowWidthContext } from './window-context';
 
 export default function MacrosData({
   children,
