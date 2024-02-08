@@ -17,7 +17,6 @@ export default function Food({
 }) {
   const foodRef = useRef<HTMLDivElement>(null);
   const [foodOffset, setFoodOffset] = useState<number>();
-  const [isSelected, setIsSelected] = useState(false);
   const [_, setDragOpacity] = useContext(DragOpacityContext);
   const viewportWidth = useContext(WindowWidthContext);
   const [mealData, setMealData] = useContext(MealDataContext);
