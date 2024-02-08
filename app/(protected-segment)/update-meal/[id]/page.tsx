@@ -43,7 +43,7 @@ export default async function UpdateMealPage({
           </Main>
         </MainContent>
         <Footer>
-          <ConfirmButton text={'Alterar refeição'} />
+          <ConfirmButton text={'Alterar refeição'} mealId={params.id}/>
         </Footer>
       </MealDataContextProvider>
     </div>
