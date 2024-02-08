@@ -68,15 +68,18 @@ export async function getMealDataById(
     }
   `;
   const desiredMealFoodsDTO = await Promise.all(
-    desiredMeal.foods.map(
-      async (foodId) =>
-        (
-          await client.query({
-            query: GET_FOOD,
-            variables: { id: foodId },
-          })
-        ).data.getFoodById as FoodDTO
-    )
+    desiredMeal.foods.map(async (foodId) => {
+      const data = (
+        await client.query({
+          query: GET_FOOD,
+          variables: { id: foodId },
+        })
+      ).data.getFoodById as FoodDTO;
+      return {
+        ...data,
+        selected: false,
+      };
+    })
   );
   return {
     name: desiredMeal.name,
