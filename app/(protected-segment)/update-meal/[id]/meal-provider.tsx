@@ -8,7 +8,7 @@ export default function MealDataContextProvider({
   children,
   initialValue,
 }: PropsWithChildren<{
-  initialValue: { name: string; foods: FoodDTO & { selected: boolean }[] };
+  initialValue: { name: string; foods: FoodDTO[] };
 }>) {
   const [mealData, setMealData] = React.useState<{
     name: string;
