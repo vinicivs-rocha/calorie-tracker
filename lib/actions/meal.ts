@@ -1,5 +1,6 @@
 'use server';
 
+import { FoodDTO } from '@/types/food';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import 'server-only';
@@ -58,7 +59,10 @@ export const createMeal = async (
     (totalIntake, food) => totalIntake + food.nutrients?.kcal!,
     0
   );
-  const foodsIds = addedFoods.map(({ id }) => id!);
+  const foods = addedFoods.map(({ id, totalQuantity }) => ({
+    id: id!,
+    quantity: totalQuantity!,
+  }));
 
   const userUid = await getUserId();
 
@@ -69,7 +73,7 @@ export const createMeal = async (
 
   await mealsCollection.add({
     name: mealName,
-    foods: foodsIds,
+    foods,
   });
 
   const lastFeedingDoc = await lastFeeding.get();
@@ -116,16 +120,26 @@ const updateMealSchema = z.object({
 export const updateMeal = async (
   prevState: any,
   mealId: string,
-  mealData: z.infer<typeof updateMealSchema>
+  mealData: z.infer<typeof updateMealSchema>,
+  mealInitialState: {
+    name: string;
+    foods: FoodDTO[];
+  }
 ) => {
+  // TODO - Add error handling
+  console.log(mealData);
   const result = updateMealSchema.safeParse(mealData);
   if (!result.success) {
     return {
       errors: result.error.flatten().fieldErrors,
     };
   }
-  const { foods, name } = result.data;
-  const foodsIds = foods.map(({ id }) => id!);
+  const { foods: newFoods, name } = result.data;
+  const foods = newFoods.map(({ id, totalQuantity }) => ({
+    id: id!,
+    quantity: totalQuantity!,
+  }));
+  const { foods: lastFoods } = mealInitialState;
 
   const [mealsDocs, error] = await getMealsSnapshots();
   if (error) {
@@ -136,42 +150,61 @@ export const updateMeal = async (
     throw new Error('No meal found');
   }
 
-  const updateRes = await desiredMealDoc.ref.update({
+  await desiredMealDoc.ref.update({
     name: name,
-    foods: foodsIds,
+    foods,
   });
 
-  const feedingRef = await desiredMealDoc.ref.parent.parent!;
+  const feedingRef = desiredMealDoc.ref.parent.parent!;
   const feedingDoc = await feedingRef.get();
   if (!feedingDoc.exists) {
     throw new Error('No feeding found');
   }
   const feedingData = feedingDoc.data()!;
-  // TODO - Take the difference between the already registered meal data and new meal data
-  const carbo = foods.reduce(
+
+  const newCarbo = newFoods.reduce(
     (totalCarbo, food) => totalCarbo + food.nutrients?.carbohydrates!,
     0
   );
-  const protein = foods.reduce(
+  const newProtein = newFoods.reduce(
     (totalProtein, food) => totalProtein + food.nutrients?.protein!,
     0
   );
-  const fat = foods.reduce(
+  const newFat = newFoods.reduce(
     (totalFat, food) => totalFat + food.nutrients?.lipids!,
     0
   );
-  const intake = foods.reduce(
+  const newIntake = newFoods.reduce(
+    (totalIntake, food) => totalIntake + food.nutrients?.kcal!,
+    0
+  );
+
+  const lastCarbo = lastFoods.reduce(
+    (totalCarbo, food) => totalCarbo + food.nutrients?.carbohydrates!,
+    0
+  );
+  const lastProtein = lastFoods.reduce(
+    (totalProtein, food) => totalProtein + food.nutrients?.protein!,
+    0
+  );
+  const lastFat = lastFoods.reduce(
+    (totalFat, food) => totalFat + food.nutrients?.lipids!,
+    0
+  );
+  const lastIntake = lastFoods.reduce(
     (totalIntake, food) => totalIntake + food.nutrients?.kcal!,
     0
   );
 
   await feedingRef.update({
-    intake: intake + feedingData.intake,
+    intake: newIntake - lastIntake + feedingData.intake,
     macros: {
-      carbo: carbo + feedingData.macros.carbo,
-      protein: protein + feedingData.macros.protein,
-      fat: fat + feedingData.macros.fat,
+      carbo: newCarbo - lastCarbo + feedingData.macros.carbo,
+      protein: newProtein - lastProtein + feedingData.macros.protein,
+      fat: newFat - lastFat + feedingData.macros.fat,
     },
   });
-  console.log('updated');
+  revalidatePath('/home');
+  revalidatePath('/update-meal/[id]', 'page');
+  redirect('/home');
 };
