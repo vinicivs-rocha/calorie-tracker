@@ -20,6 +20,7 @@ export default function Food({
   const [_, setDragOpacity] = useContext(DragOpacityContext);
   const viewportWidth = useContext(WindowWidthContext);
   const [mealData, setMealData] = useContext(MealDataContext);
+  // TODO - Fix opacity change on drag
 
   if (setDragOpacity) {
     setDragOpacity(() => {
