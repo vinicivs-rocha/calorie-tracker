@@ -3,7 +3,7 @@ import { feedings, meals } from '@/lib/utils/collections';
 import { Meal } from '@/types/documents';
 import { ErrorMessage } from '@/types/error';
 import { FoodDTO } from '@/types/food';
-import { gql } from '@apollo/client';
+import { ApolloError, gql } from '@apollo/client';
 import { client } from '../graphql';
 import { getUserId } from '../session';
 
@@ -68,21 +68,34 @@ export async function getMealDataById(
     }
   `;
   const desiredMealFoodsDTO = await Promise.all(
-    desiredMeal.foods.map(async (foodId) => {
-      const data = (
-        await client.query({
+    desiredMeal.foods.map(async ({ id, quantity }) => {
+      try {
+        const result = await client.query({
           query: GET_FOOD,
-          variables: { id: foodId },
-        })
-      ).data.getFoodById as FoodDTO;
-      return {
-        ...data,
-        selected: false,
-      };
+          variables: { id },
+        });
+        const data = result.data.getFoodById as FoodDTO;
+        return {
+          ...data,
+          totalQuantity: quantity,
+          nutrients: {
+            carbohydrates: (data.nutrients?.carbohydrates! * quantity) / 100,
+            protein: (data.nutrients?.protein! * quantity) / 100,
+            lipids: (data.nutrients?.lipids! * quantity) / 100,
+            kcal: (data.nutrients?.kcal! * quantity) / 100,
+          },
+          selected: false,
+        };
+      } catch (error) {
+        if (error instanceof ApolloError) {
+          console.log(error);
+        }
+        return null;
+      }
     })
   );
   return {
     name: desiredMeal.name,
-    foods: desiredMealFoodsDTO,
+    foods: desiredMealFoodsDTO.filter((food) => food !== null) as FoodDTO[],
   };
 }

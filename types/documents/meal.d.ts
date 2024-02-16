@@ -1,4 +1,4 @@
 export interface Meal {
   name: string;
-  foods: number[];
+  foods: { id: number; quantity: number }[];
 }
