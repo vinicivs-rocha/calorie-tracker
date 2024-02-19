@@ -12,10 +12,7 @@ import {
 import { CategoryDTO } from '@/types/category';
 import { FoodDTO } from '@/types/food';
 import { gql, useQuery } from '@apollo/client';
-import React, {
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function TacoItems({
   setSelectedFood,
@@ -35,15 +32,16 @@ export default function TacoItems({
       }
     }
   `;
+  // TODO - Fix ever loading query
   const queryResult = useQuery<{ getAllCategories: CategoryDTO[] }>(query);
-  
+  console.log(queryResult.loading, queryResult.error, queryResult.data);
   const foodsByCategory = queryResult.data?.getAllCategories;
 
   return (
     <Select
       onValueChange={(foodId) =>
         setSelectedFood(
-          (prev) => ({ ...prev, id: foodId } as unknown as FoodDTO)
+          (prev) => ({ ...prev, id: foodId }) as unknown as FoodDTO
         )
       }
       onOpenChange={(isOpen) => setTimeout(() => setIsSelectOpen(isOpen), 10)}
@@ -56,7 +54,7 @@ export default function TacoItems({
           ? foodsByCategory.map(({ name, foods }, index) => (
               <SelectGroup key={index}>
                 <SelectLabel>{name}</SelectLabel>
-                {foods.map(({ name, id }, index) => (
+                {foods.map(({ name, id }) => (
                   <SelectItem value={id} key={id}>
                     {name}
                   </SelectItem>
