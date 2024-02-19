@@ -127,7 +127,6 @@ export const updateMeal = async (
   }
 ) => {
   // TODO - Add error handling
-  console.log(mealData);
   const result = updateMealSchema.safeParse(mealData);
   if (!result.success) {
     return {
