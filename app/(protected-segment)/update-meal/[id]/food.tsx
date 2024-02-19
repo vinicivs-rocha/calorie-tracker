@@ -27,6 +27,7 @@ export default function Food({
     [setDragOpacity]
   );
 
+  // TODO - Fix opacity changing when component is mounting
   useEffect(() => foodOffset.on('change', setOpacity));
 
   function toggleSelect() {
