@@ -7,8 +7,7 @@ import {
   AlertDescription,
   AlertTitle,
 } from '@/app/ui/components/ui/alert';
-import { motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function ErrorAlert({
   errors,
@@ -24,7 +23,7 @@ export default function ErrorAlert({
           key={message}
           initial={{ x: 1000, opacity: 0 }}
           animate={{ x: 0, opacity: 1, transition: { duration: 0.3 } }}
-          exit={{ x: -1000, opacity: 0 , transition: { duration: 0.3 }}}
+          exit={{ x: -1000, opacity: 0, transition: { duration: 0.3 } }}
         >
           <Alert className='bg-red-300' variant='destructive'>
             <ExclamationTriangleIcon className='h-3 w-3' color='white' />

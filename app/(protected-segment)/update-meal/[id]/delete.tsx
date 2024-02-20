@@ -11,6 +11,7 @@ import styles from './update-meal.module.css';
 export default function DeleteButton({ foodIndex }: { foodIndex: number }) {
   const [dragOpacity] = useContext(DragOpacityContext);
   const [_, setMealData] = useContext(MealDataContext);
+
   const deleteFood = useCallback(() => {
     if (!setMealData) throw new Error('No meal data context provider');
     setMealData((prev) => ({

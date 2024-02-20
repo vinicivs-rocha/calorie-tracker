@@ -32,11 +32,9 @@ export default function TacoItems({
       }
     }
   `;
-  // TODO - Fix ever loading query
   const queryResult = useQuery<{ getAllCategories: CategoryDTO[] }>(query);
-  console.log(queryResult.loading, queryResult.error, queryResult.data);
   const foodsByCategory = queryResult.data?.getAllCategories;
-
+  // TODO - Replace select with combobox
   return (
     <Select
       onValueChange={(foodId) =>
@@ -50,18 +48,22 @@ export default function TacoItems({
         <SelectValue placeholder='Selecione um alimento' />
       </SelectTrigger>
       <SelectContent>
-        {foodsByCategory !== undefined
-          ? foodsByCategory.map(({ name, foods }, index) => (
-              <SelectGroup key={index}>
-                <SelectLabel>{name}</SelectLabel>
-                {foods.map(({ name, id }) => (
-                  <SelectItem value={id} key={id}>
-                    {name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            ))
-          : null}
+        {foodsByCategory !== undefined ? (
+          foodsByCategory.map(({ name, foods }, index) => (
+            <SelectGroup key={index}>
+              <SelectLabel>{name}</SelectLabel>
+              {foods.map(({ name, id }) => (
+                <SelectItem value={id} key={id}>
+                  {name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          ))
+        ) : queryResult.loading ? (
+          <p>Carregando...</p>
+        ) : (
+          queryResult.error?.message
+        )}
       </SelectContent>
     </Select>
   );
