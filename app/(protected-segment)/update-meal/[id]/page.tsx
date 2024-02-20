@@ -8,6 +8,7 @@ import ConfirmButton from './confirm';
 import FieldInput from './field';
 import Foods from './foods';
 import Footer from './footer';
+import FormStateContextProvider from './form-provider';
 import Header from './header';
 import Heading from './heading';
 import Main from './main';
@@ -25,30 +26,28 @@ export default async function UpdateMealPage({
   return (
     <div className={styles.page}>
       <MealDataContextProvider initialValue={mealInitialState}>
-        <MainContent>
-          <Header>
-            <Link href='/home' className={styles.backSign}>
-              <Image src={backSign} alt='' height={12} width={12} />
-            </Link>
-            <Heading>Altere sua refeição</Heading>
-          </Header>
-          <Main>
-            <FieldInput label='Nome'>
-              <NameInput />
-            </FieldInput>
-            <Foods>
-              <AddedFoods />
-              <AddFoodButton />
-            </Foods>
-          </Main>
-        </MainContent>
-        <Footer>
-          <ConfirmButton
-            text={'Alterar refeição'}
-            mealId={params.id}
-            mealInitialState={mealInitialState}
-          />
-        </Footer>
+        <FormStateContextProvider mealId={params.id} mealInitialState={mealInitialState}>
+          <MainContent>
+            <Header>
+              <Link href='/home' className={styles.backSign}>
+                <Image src={backSign} alt='' height={12} width={12} />
+              </Link>
+              <Heading>Altere sua refeição</Heading>
+            </Header>
+            <Main>
+              <FieldInput label='Nome'>
+                <NameInput />
+              </FieldInput>
+              <Foods>
+                <AddedFoods />
+                <AddFoodButton />
+              </Foods>
+            </Main>
+          </MainContent>
+          <Footer>
+            <ConfirmButton text={'Alterar refeição'} />
+          </Footer>
+        </FormStateContextProvider>
       </MealDataContextProvider>
     </div>
   );
