@@ -92,6 +92,7 @@
 }
 
 .food {
+  z-index: 1;
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -174,6 +175,7 @@
 }
 
 .delete {
+  z-index: 0;
   position: absolute;
   height: 100%;
   display: flex;
