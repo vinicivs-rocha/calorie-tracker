@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import backSign from '@/app/ui/assets/back-sign.svg';
-import Image from 'next/image';
+import ErrorAlert from '@/app/error-alert';
 import { poppins } from '@/app/fonts';
-import styles from './new-meal.module.css';
+import backSign from '@/app/ui/assets/back-sign.svg';
+import { createMeal } from '@/lib/actions/meal';
+import { formatErrors } from '@/lib/utils/format-errors';
+import { FoodDTO } from '@/types/food';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useFormState } from 'react-dom';
 import AddedFoods from './added-foods';
 import ConfirmButton from './confirm-button';
-import { FoodDTO } from '@/types/food';
-import { createMeal } from '@/lib/actions/meal';
-import { useFormState } from 'react-dom';
-import ErrorAlert from '@/app/error-alert';
-import Link from 'next/link';
+import styles from './new-meal.module.css';
 
 export default function NewMealPage() {
   const [addedFoods, setAddedFoods] = useState<FoodDTO[]>([]);
@@ -43,14 +44,9 @@ export default function NewMealPage() {
   const { mealName: mealNameErrors, addedFoods: addedFoodsErrors } =
     formErrors.errors;
 
-  function formatErrors(errors: string[] | undefined = []) {
-    if (errors === undefined) return [];
-    return errors;
-  }
-
   return (
     <>
-      <div className='absolute flex w-auto flex-col gap-2 xl:top-4 xl:right-4'>
+      <div className='absolute flex w-auto flex-col gap-2 xl:right-4 xl:top-4'>
         <ErrorAlert
           errors={formatErrors(mealNameErrors).concat(
             formatErrors(addedFoodsErrors)
@@ -60,7 +56,7 @@ export default function NewMealPage() {
       </div>
       <div className={styles.container}>
         <header className={styles.header}>
-          <Link href="/home">
+          <Link href='/home'>
             <Image
               className={styles.backSign}
               src={backSign}
