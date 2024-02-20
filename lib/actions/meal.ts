@@ -126,7 +126,6 @@ export const updateMeal = async (
     foods: FoodDTO[];
   }
 ) => {
-  // TODO - Add error handling
   const result = updateMealSchema.safeParse(mealData);
   if (!result.success) {
     return {
