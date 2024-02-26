@@ -285,9 +285,9 @@ export const deleteMeal = async (prevState: any, mealId: string) => {
     await feedingRef.update({
       intake: feedingData.intake - removedIntake,
       macros: {
-        carbo: feedingData.macros.carbo - removedCarbo,
-        protein: feedingData.macros.protein - removedProtein,
-        fat: feedingData.macros.fat - removedFat,
+        carbo: Math.abs(feedingData.macros.carbo - removedCarbo),
+        protein: Math.abs(feedingData.macros.protein - removedProtein),
+        fat: Math.abs(feedingData.macros.fat - removedFat),
       },
     });
     await desiredMealDoc.ref.delete();
