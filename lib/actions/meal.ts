@@ -1,11 +1,13 @@
 'use server';
 
 import { FoodDTO } from '@/types/food';
+import { ApolloError, gql } from '@apollo/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import 'server-only';
 import { z } from 'zod';
 import { getMealsSnapshots } from '../data';
+import { client } from '../graphql';
 import { getUserId } from '../session';
 import { getLastDocument } from '../utils';
 import { feedings, meals } from '../utils/collections';
@@ -205,4 +207,104 @@ export const updateMeal = async (
   revalidatePath('/home');
   revalidatePath('/update-meal/[id]', 'page');
   redirect('/home');
+};
+
+export const deleteMeal = async (prevState: any, mealId: string) => {
+  const [mealsDocs, error] = await getMealsSnapshots();
+  if (error) {
+    return {
+      errors: [error],
+    };
+  }
+
+  const desiredMealDoc = mealsDocs.find((meal) => meal.id === mealId);
+  if (!desiredMealDoc) {
+    return {
+      errors: ['No meal found by this id'],
+    };
+  }
+
+  try {
+    const mealFoods = await Promise.all(
+      desiredMealDoc.data().foods.map(async ({ id, quantity }) => {
+        const query = gql`
+          query GetFoodById($id: Int!) {
+            getFoodById(id: $id) {
+              id
+              name
+              nutrients {
+                carbohydrates
+                protein
+                lipids
+                kcal
+              }
+            }
+          }
+        `;
+        const { data } = await client.query<{ getFoodById: FoodDTO }>({
+          query,
+          variables: { id },
+        });
+        return {
+          nutrients: {
+            carbo:
+              (data.getFoodById.nutrients?.carbohydrates! * quantity) / 100,
+            protein: (data.getFoodById.nutrients?.protein! * quantity) / 100,
+            lipids: (data.getFoodById.nutrients?.lipids! * quantity) / 100,
+            kcal: (data.getFoodById.nutrients?.kcal! * quantity) / 100,
+          },
+        };
+      })
+    );
+    const removedCarbo = mealFoods.reduce(
+      (total, food) => food.nutrients.carbo + total,
+      0
+    );
+    const removedProtein = mealFoods.reduce(
+      (total, food) => food.nutrients.protein + total,
+      0
+    );
+    const removedFat = mealFoods.reduce(
+      (total, food) => food.nutrients.lipids + total,
+      0
+    );
+    const removedIntake = mealFoods.reduce(
+      (total, food) => food.nutrients.kcal + total,
+      0
+    );
+
+    const feedingRef = desiredMealDoc.ref.parent.parent!;
+    const feedingDoc = await feedingRef.get();
+    if (!feedingDoc.exists) {
+      return {
+        errors: ['Meal has no parent feeding'],
+      };
+    }
+    const feedingData = feedingDoc.data()!;
+
+    await feedingRef.update({
+      intake: feedingData.intake - removedIntake,
+      macros: {
+        carbo: feedingData.macros.carbo - removedCarbo,
+        protein: feedingData.macros.protein - removedProtein,
+        fat: feedingData.macros.fat - removedFat,
+      },
+    });
+    await desiredMealDoc.ref.delete();
+  } catch (error) {
+    if (!(error instanceof ApolloError)) {
+      console.log(error);
+      return {
+        errors: [],
+      };
+    }
+    return {
+      errors: [error.message],
+    };
+  }
+
+  revalidatePath('/home');
+  return {
+    errors: [],
+  };
 };
