@@ -1,7 +1,6 @@
-import MealCard from './meal-card';
-import styles from './current.module.css';
 import { getMealData, getMealsSnapshots } from '@/lib/data';
-import { Suspense } from 'react';
+import styles from './current.module.css';
+import MealCard from './meal-card';
 
 export default async function MealCardsContainer() {
   const [meals, error] = await getMealsSnapshots();
@@ -12,14 +11,12 @@ export default async function MealCardsContainer() {
       </h2>
     );
 
-  const mealCards = await Promise.all(meals.map(async (meal) => {
-    const mealData = await getMealData(meal);
-    return (
-      <Suspense key={meal.id} fallback={<p>Loading...</p>}>
-        <MealCard meal={mealData} id={meal.id} />
-      </Suspense>
-    );
-  }));
+  const mealCards = await Promise.all(
+    meals.map(async (meal) => {
+      const mealData = await getMealData(meal);
+      return <MealCard meal={mealData} id={meal.id} key={meal.id} />;
+    })
+  );
 
   if (mealCards.length === 0)
     return (
