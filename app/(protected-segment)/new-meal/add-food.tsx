@@ -1,23 +1,23 @@
 'use client';
 
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-  useRef,
-  useCallback,
-} from 'react';
-import Image from 'next/image';
 import check from '@/app/ui/assets/check.svg';
 import crossSign from '@/app/ui/assets/cross-icon.svg';
-import styles from './new-meal.module.css';
-import { FoodDTO } from '@/types/food';
-import { motion, AnimatePresence } from 'framer-motion';
-import TacoItems from '../taco-items';
-import { ApolloProvider, gql, useQuery } from '@apollo/client';
-import { client } from '@/lib/graphql';
 import plusSign from '@/app/ui/assets/plus-sign.svg';
+import { client } from '@/lib/graphql';
+import { FoodDTO } from '@/types/food';
+import { ApolloProvider, gql, useQuery } from '@apollo/client';
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import TacoItems from '../taco-items';
+import styles from './new-meal.module.css';
 
 export default function AddFoodButton({
   setAddedFoods,
@@ -83,7 +83,7 @@ export default function AddFoodButton({
           totalQuantity,
           name,
           nutrients: {
-            carbohydrates: (carbohydrates! * totalQuantity!)  / 100,
+            carbohydrates: (carbohydrates! * totalQuantity!) / 100,
             protein: (protein! * totalQuantity!) / 100,
             lipids: (lipids! * totalQuantity!) / 100,
             kcal: (kcal! * totalQuantity!) / 100,
@@ -129,7 +129,9 @@ export default function AddFoodButton({
         >
           <ApolloProvider client={client}>
             <TacoItems
-              setIsSelectOpen={setIsSelectOpen}
+              setIsOpen={setIsSelectOpen}
+              isOpen={isSelectOpen}
+              selectedFood={selectedFood}
               setSelectedFood={setSelectedFood}
             />
           </ApolloProvider>

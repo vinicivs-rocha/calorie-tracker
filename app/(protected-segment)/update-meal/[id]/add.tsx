@@ -145,7 +145,9 @@ export default function AddFoodButton() {
           }}
         >
           <TacoItems
-            setIsSelectOpen={setIsSelectOpen}
+            setIsOpen={setIsSelectOpen}
+            isOpen={isSelectOpen}
+            selectedFood={selectedFood}
             setSelectedFood={setSelectedFood}
           />
           <QuantityInput setSelectedFood={setSelectedFood} />
