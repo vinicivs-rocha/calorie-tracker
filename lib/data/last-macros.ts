@@ -1,18 +1,20 @@
-import { getUserId } from '../session';
-import { getLastDocument } from '@/lib/utils';
+import { getDocData, getLastDocument } from '@/lib/utils';
 import { feedings } from '@/lib/utils/collections';
-import { getDocData } from '@/lib/utils';
+import { Macros } from '@/types/documents/macros';
+import { getUserId } from '../session';
 
-export async function getLastFeedingMacros() {
+export async function getLastFeedingMacros(): Promise<Macros> {
   const userUid = await getUserId();
 
-  const lastFeeding = await getLastDocument(feedings(userUid)) ?? { exists: false };
+  const lastFeeding = (await getLastDocument(feedings(userUid))) ?? {
+    exists: false,
+  };
   if (!lastFeeding.exists) {
     return {
-      carbs: 0,
-      fats: 0,
-      proteins: 0,
-    };
+      carbo: 0,
+      fat: 0,
+      protein: 0,
+    } as Macros;
   }
 
   const { macros } = (await getDocData(lastFeeding))!;
