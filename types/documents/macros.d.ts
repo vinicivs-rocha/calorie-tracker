@@ -1,5 +1,6 @@
 export interface Macros {
-  carbo: number
-  protein: number
-  fat: number
+  [key: string]: number;
+  carbo: number;
+  protein: number;
+  fat: number;
 }
