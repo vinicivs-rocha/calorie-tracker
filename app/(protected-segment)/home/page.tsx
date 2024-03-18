@@ -10,14 +10,16 @@ export default function Home({
   searchParams: { tab: ('current' | 'history') | undefined };
 }) {
   return (
-    <main className={styles.mainContainer}>
+    <>
       {searchParams.tab === 'current' || !searchParams.tab ? (
-        <ErrorContextProvider>
-          <CurrentMeals />
-        </ErrorContextProvider>
+        <main className={styles.mainContainer}>
+          <ErrorContextProvider>
+            <CurrentMeals />
+          </ErrorContextProvider>
+        </main>
       ) : (
         <MealsHistory />
       )}
-    </main>
+    </>
   );
 }
