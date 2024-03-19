@@ -4,8 +4,7 @@ import { calendarLastDateBuilder } from '@/lib/utils/date-builder';
 import { CalendarDay } from '@/types/calendar';
 import Calendar from './calendar';
 import styles from './history.module.css';
-// TODO - add context
-// TODO - add desktop styling
+
 export default async function DatePicker() {
   const feedings = await getFeedings();
   const registeredDatesList = feedings.map<CalendarDay>((feeding) => {

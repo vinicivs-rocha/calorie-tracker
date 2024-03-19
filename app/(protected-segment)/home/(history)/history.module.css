@@ -16,7 +16,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 30px
+  gap: 30px;
 }
 
 .day {
@@ -40,16 +40,33 @@
   background-image: linear-gradient(132deg, rgba(234, 179, 8, .5), rgba(253, 224, 71, .3));
 }
 
-.day.inactivated {
-  opacity: .5;
-}
-
 .day p {
   border-radius: 8px;
   padding: 4px;
+  text-align: center;
 }
 
 .badge {
   background-color: #EAB308;
   color: #F8F9FA;
+}
+
+@media screen and (min-width: 1440px) {
+  .main {
+    padding: 20px;
+  }
+  .daysContainer {
+    gap: 24px;
+  }
+  .day {
+    width: 48px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  .day p {
+    padding: 0;
+  }
+  .day p:nth-child(2) {
+    padding: 8px;
+  }
 }
