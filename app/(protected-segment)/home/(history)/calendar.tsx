@@ -1,9 +1,12 @@
 'use client';
 
 import { ScrollArea, ScrollBar } from '@/app/ui/components/ui/scroll-area';
+import { useCalendarContext } from '@/lib/contexts';
 import { CalendarDay } from '@/types/calendar';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useCallback, useEffect } from 'react';
+import { CalendarDayButton } from './day';
 import styles from './history.module.css';
 
 export default function Calendar({
@@ -13,39 +16,33 @@ export default function Calendar({
   datesList: CalendarDay[];
   lastId: string;
 }) {
-  const [selectedId, setSelectedId] = useState<string>(lastId);
+  const { value: day, setValue: setDay } = useCalendarContext();
+  const findLastDay = useCallback(
+    () => datesList.find((date) => date.id === lastId),
+    [datesList, lastId]
+  );
+
+  useEffect(() => {
+    setDay(findLastDay() || datesList[0]);
+  }, [setDay, findLastDay, datesList]);
+
   return (
     <ScrollArea className='w-full whitespace-nowrap'>
       <div className={styles.daysContainer}>
         {datesList.map((date, index) => (
-          <div
-            onClick={() => {
-              if (date.id !== '') {
-                setSelectedId(date.id);
-              }
-            }}
-            key={index}
-            className={clsx(styles.day, {
-              [styles.active]: date.id === selectedId,
-              [styles.inactivated]: date.id === '',
-            })}
-          >
-            <p>{date.day}</p>
-            <p
-              className={clsx({
-                [styles.badge]: date.id === selectedId,
-              })}
-            >
-              {date.number}
-            </p>
-            <p
-              className={clsx({
-                [styles.hidden]: date.id !== selectedId,
-              })}
-            >
-              {date.month}
-            </p>
-          </div>
+          <AnimatePresence key={index} mode='wait'>
+            <CalendarDayButton date={date}>
+              <p>{date.day}</p>
+              <p
+                className={clsx({
+                  [styles.badge]: date.id === day.id,
+                })}
+              >
+                {date.number}
+              </p>
+              <p>{date.month}</p>
+            </CalendarDayButton>
+          </AnimatePresence>
         ))}
       </div>
       <ScrollBar orientation='horizontal' className='h-0' />
