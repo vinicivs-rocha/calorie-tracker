@@ -18,7 +18,24 @@ export async function getMealData(
   return mealData;
 }
 
-export async function getMealsSnapshots(): Promise<
+export async function getMealsSnapshots(
+  userUid: string,
+  feedingId: string
+): Promise<
+  [
+    FirebaseFirestore.QueryDocumentSnapshot<
+      Meal,
+      FirebaseFirestore.DocumentData
+    >[],
+    ErrorMessage,
+  ]
+> {
+  const mealsDocs = await getAllCollectionDocs(meals(userUid, feedingId));
+
+  return [mealsDocs, null];
+}
+
+export async function getLastMealsSnapshots(): Promise<
   [
     FirebaseFirestore.QueryDocumentSnapshot<
       Meal,
@@ -41,10 +58,10 @@ export async function getMealsSnapshots(): Promise<
   return [mealsDocs, null];
 }
 
-export async function getMealDataById(
+export async function getLastMealsDataById(
   mealId: string
 ): Promise<{ name: string; foods: FoodDTO[] }> {
-  const [mealsDocs, error] = await getMealsSnapshots();
+  const [mealsDocs, error] = await getLastMealsSnapshots();
   if (error) {
     throw new Error(error);
   }
