@@ -1,4 +1,7 @@
-import { Meal } from "@/types/documents";
-import { collectionPointer } from "@/lib/utils/collection-pointer";
+import { collectionPointer } from '@/lib/utils/collection-pointer';
+import { Meal } from '@/types/documents';
 
-export const meals = (userUid: string, feedingUid: string) => collectionPointer<Meal>(`userMeals/${userUid}/dailyFeeding/${feedingUid}/meals`);
+export const meals = (userUid: string, feedingUid: string) =>
+  collectionPointer<Meal>(
+    `userMeals/${userUid}/dailyFeeding/${feedingUid}/meals`
+  );
