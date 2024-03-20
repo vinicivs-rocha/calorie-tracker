@@ -1,5 +1,5 @@
 import backSign from '@/app/ui/assets/back-sign.svg';
-import { getMealDataById } from '@/lib/data';
+import { getLastMealsDataById } from '@/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
 import AddFoodButton from './add';
@@ -22,11 +22,14 @@ export default async function UpdateMealPage({
 }: {
   params: { id: string };
 }) {
-  const mealInitialState = await getMealDataById(params.id);
+  const mealInitialState = await getLastMealsDataById(params.id);
   return (
     <div className={styles.page}>
       <MealDataContextProvider initialValue={mealInitialState}>
-        <FormStateContextProvider mealId={params.id} mealInitialState={mealInitialState}>
+        <FormStateContextProvider
+          mealId={params.id}
+          mealInitialState={mealInitialState}
+        >
           <MainContent>
             <Header>
               <Link href='/home' className={styles.backSign}>

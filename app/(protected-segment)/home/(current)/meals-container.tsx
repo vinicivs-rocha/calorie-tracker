@@ -1,9 +1,9 @@
-import { getMealData, getMealsSnapshots } from '@/lib/data';
+import { getLastMealsSnapshots, getMealData } from '@/lib/data';
 import styles from './current.module.css';
 import MealCard from './meal-card';
 
 export default async function MealCardsContainer() {
-  const [meals, error] = await getMealsSnapshots();
+  const [meals, error] = await getLastMealsSnapshots();
   if (error !== null)
     return (
       <h2 className={styles.notFoundText}>

@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import 'server-only';
 import { z } from 'zod';
-import { getMealsSnapshots } from '../data';
+import { getLastMealsSnapshots } from '../data';
 import { client } from '../graphql';
 import { getUserId } from '../session';
 import { getLastDocument } from '../utils';
@@ -141,7 +141,7 @@ export const updateMeal = async (
   }));
   const { foods: lastFoods } = mealInitialState;
 
-  const [mealsDocs, error] = await getMealsSnapshots();
+  const [mealsDocs, error] = await getLastMealsSnapshots();
   if (error) {
     throw new Error(error);
   }
@@ -210,7 +210,7 @@ export const updateMeal = async (
 };
 
 export const deleteMeal = async (prevState: any, mealId: string) => {
-  const [mealsDocs, error] = await getMealsSnapshots();
+  const [mealsDocs, error] = await getLastMealsSnapshots();
   if (error) {
     return {
       errors: [error],
